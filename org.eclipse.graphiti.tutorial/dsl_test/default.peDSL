@@ -1,0 +1,34 @@
+class StringRef {
+
+}
+
+class LinkRef {
+
+}
+
+class NodeRef {
+
+}
+
+
+class IconProperties {
+	StringRef icon;
+	string title;
+	string description = model.activity_description;				//explicit bind
+}
+
+class Group: IconProperties {
+
+}
+
+class Node: IconProperties {
+	
+	LinkRef[] anchor;
+}
+
+class Link: IconProperties {
+	NodeRef[] source;						
+	NodeRef[] target;
+	
+	//TODO: source / target combinations!!
+}

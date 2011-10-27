@@ -1,0 +1,71 @@
+diagram WorkflowType;
+
+
+//Flows group for context Button/Menu
+group ContextFlows {
+	icon = icons.flows;
+	title = "Add Flow";
+	description = "Group of flow types"
+}
+
+group Containers {
+	title = "Containers";
+
+	node Workflow {
+		container.node = Frame;
+	}
+	
+	node Frame {
+		container.node = Activity;									//accept drops and connections of these types	
+		container.link = Floe;
+	}
+}
+
+group Activities {
+	title = "Activities";
+
+	node Activity(EActivity) {
+
+		//default anchor.multiplicity = *;
+		anchor.type = CHOPBOX;										//default to NONE
+		anchor.multiplicity = 0;									//don't accept source/target connections of any kind
+		
+		anchor[Flow].contextButton = Flows;							//context button available for Flow in Flows group...
+		anchor[Flow].contextMenu = Flows;
+	}
+	
+	node AutomaticActivity: Activity {
+		anchor[Flow].multiplicity = *;
+	}
+	
+	node HumanActivity: Activity {
+		anchor[Flow].multiplicity = *;
+	}
+	
+	node StartActivity: Activity {
+		anchor[Flow].source.multiplicity = 1; 						//don't accept more than one source Flow
+	}
+	
+	node EndActivity: Activity {		
+		anchor[Flow].target.multiplicity = *;
+	}
+	
+	node DataProcessorActivity(EDataProcessorActivity): Activity {
+		anchor[DataFlow].target.multiplicity = *;					//accept any number of data flows
+		
+		anchor[DataFlow].contextButton = Flows;
+	}
+}
+
+group Flows {
+	title = "Flows";
+	
+	link Flow {
+		source = Activity;
+		target = Activity;
+	}
+	
+	link DataFlow: Flow {
+		target += DataProcessorActivity;		//add DataProcessorActivity as target
+	}
+}
