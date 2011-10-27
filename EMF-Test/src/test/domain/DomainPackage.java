@@ -4,7 +4,7 @@
  *
  * $Id$
  */
-package test.domain.domain;
+package test.domain;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
@@ -22,7 +22,7 @@ import org.eclipse.emf.ecore.EReference;
  *   <li>and each data type</li>
  * </ul>
  * <!-- end-user-doc -->
- * @see test.domain.domain.DomainFactory
+ * @see test.domain.DomainFactory
  * @model kind="package"
  * @generated
  */
@@ -57,14 +57,14 @@ public interface DomainPackage extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	DomainPackage eINSTANCE = test.domain.domain.impl.DomainPackageImpl.init();
+	DomainPackage eINSTANCE = test.domain.impl.DomainPackageImpl.init();
 
 	/**
-	 * The meta object id for the '{@link test.domain.domain.impl.UserImpl <em>User</em>}' class.
+	 * The meta object id for the '{@link test.domain.impl.UserImpl <em>User</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see test.domain.domain.impl.UserImpl
-	 * @see test.domain.domain.impl.DomainPackageImpl#getUser()
+	 * @see test.domain.impl.UserImpl
+	 * @see test.domain.impl.DomainPackageImpl#getUser()
 	 * @generated
 	 */
 	int USER = 0;
@@ -115,11 +115,11 @@ public interface DomainPackage extends EPackage {
 	int USER_FEATURE_COUNT = 4;
 
 	/**
-	 * The meta object id for the '{@link test.domain.domain.impl.GroupImpl <em>Group</em>}' class.
+	 * The meta object id for the '{@link test.domain.impl.GroupImpl <em>Group</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see test.domain.domain.impl.GroupImpl
-	 * @see test.domain.domain.impl.DomainPackageImpl#getGroup()
+	 * @see test.domain.impl.GroupImpl
+	 * @see test.domain.impl.DomainPackageImpl#getGroup()
 	 * @generated
 	 */
 	int GROUP = 1;
@@ -143,11 +143,11 @@ public interface DomainPackage extends EPackage {
 	int GROUP_FEATURE_COUNT = 1;
 
 	/**
-	 * The meta object id for the '{@link test.domain.domain.impl.AddressImpl <em>Address</em>}' class.
+	 * The meta object id for the '{@link test.domain.impl.AddressImpl <em>Address</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see test.domain.domain.impl.AddressImpl
-	 * @see test.domain.domain.impl.DomainPackageImpl#getAddress()
+	 * @see test.domain.impl.AddressImpl
+	 * @see test.domain.impl.DomainPackageImpl#getAddress()
 	 * @generated
 	 */
 	int ADDRESS = 2;
@@ -172,96 +172,96 @@ public interface DomainPackage extends EPackage {
 
 
 	/**
-	 * Returns the meta object for class '{@link test.domain.domain.User <em>User</em>}'.
+	 * Returns the meta object for class '{@link test.domain.User <em>User</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for class '<em>User</em>'.
-	 * @see test.domain.domain.User
+	 * @see test.domain.User
 	 * @generated
 	 */
 	EClass getUser();
 
 	/**
-	 * Returns the meta object for the attribute '{@link test.domain.domain.User#getName <em>Name</em>}'.
+	 * Returns the meta object for the attribute '{@link test.domain.User#getName <em>Name</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Name</em>'.
-	 * @see test.domain.domain.User#getName()
+	 * @see test.domain.User#getName()
 	 * @see #getUser()
 	 * @generated
 	 */
 	EAttribute getUser_Name();
 
 	/**
-	 * Returns the meta object for the attribute '{@link test.domain.domain.User#getPass <em>Pass</em>}'.
+	 * Returns the meta object for the attribute '{@link test.domain.User#getPass <em>Pass</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Pass</em>'.
-	 * @see test.domain.domain.User#getPass()
+	 * @see test.domain.User#getPass()
 	 * @see #getUser()
 	 * @generated
 	 */
 	EAttribute getUser_Pass();
 
 	/**
-	 * Returns the meta object for the reference list '{@link test.domain.domain.User#getGroups <em>Groups</em>}'.
+	 * Returns the meta object for the reference list '{@link test.domain.User#getGroups <em>Groups</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the reference list '<em>Groups</em>'.
-	 * @see test.domain.domain.User#getGroups()
+	 * @see test.domain.User#getGroups()
 	 * @see #getUser()
 	 * @generated
 	 */
 	EReference getUser_Groups();
 
 	/**
-	 * Returns the meta object for the containment reference list '{@link test.domain.domain.User#getAddresses <em>Addresses</em>}'.
+	 * Returns the meta object for the containment reference list '{@link test.domain.User#getAddresses <em>Addresses</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the containment reference list '<em>Addresses</em>'.
-	 * @see test.domain.domain.User#getAddresses()
+	 * @see test.domain.User#getAddresses()
 	 * @see #getUser()
 	 * @generated
 	 */
 	EReference getUser_Addresses();
 
 	/**
-	 * Returns the meta object for class '{@link test.domain.domain.Group <em>Group</em>}'.
+	 * Returns the meta object for class '{@link test.domain.Group <em>Group</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for class '<em>Group</em>'.
-	 * @see test.domain.domain.Group
+	 * @see test.domain.Group
 	 * @generated
 	 */
 	EClass getGroup();
 
 	/**
-	 * Returns the meta object for the attribute '{@link test.domain.domain.Group#getName <em>Name</em>}'.
+	 * Returns the meta object for the attribute '{@link test.domain.Group#getName <em>Name</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Name</em>'.
-	 * @see test.domain.domain.Group#getName()
+	 * @see test.domain.Group#getName()
 	 * @see #getGroup()
 	 * @generated
 	 */
 	EAttribute getGroup_Name();
 
 	/**
-	 * Returns the meta object for class '{@link test.domain.domain.Address <em>Address</em>}'.
+	 * Returns the meta object for class '{@link test.domain.Address <em>Address</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for class '<em>Address</em>'.
-	 * @see test.domain.domain.Address
+	 * @see test.domain.Address
 	 * @generated
 	 */
 	EClass getAddress();
 
 	/**
-	 * Returns the meta object for the attribute '{@link test.domain.domain.Address#getLocal <em>Local</em>}'.
+	 * Returns the meta object for the attribute '{@link test.domain.Address#getLocal <em>Local</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Local</em>'.
-	 * @see test.domain.domain.Address#getLocal()
+	 * @see test.domain.Address#getLocal()
 	 * @see #getAddress()
 	 * @generated
 	 */
@@ -290,11 +290,11 @@ public interface DomainPackage extends EPackage {
 	 */
 	interface Literals {
 		/**
-		 * The meta object literal for the '{@link test.domain.domain.impl.UserImpl <em>User</em>}' class.
+		 * The meta object literal for the '{@link test.domain.impl.UserImpl <em>User</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see test.domain.domain.impl.UserImpl
-		 * @see test.domain.domain.impl.DomainPackageImpl#getUser()
+		 * @see test.domain.impl.UserImpl
+		 * @see test.domain.impl.DomainPackageImpl#getUser()
 		 * @generated
 		 */
 		EClass USER = eINSTANCE.getUser();
@@ -332,11 +332,11 @@ public interface DomainPackage extends EPackage {
 		EReference USER__ADDRESSES = eINSTANCE.getUser_Addresses();
 
 		/**
-		 * The meta object literal for the '{@link test.domain.domain.impl.GroupImpl <em>Group</em>}' class.
+		 * The meta object literal for the '{@link test.domain.impl.GroupImpl <em>Group</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see test.domain.domain.impl.GroupImpl
-		 * @see test.domain.domain.impl.DomainPackageImpl#getGroup()
+		 * @see test.domain.impl.GroupImpl
+		 * @see test.domain.impl.DomainPackageImpl#getGroup()
 		 * @generated
 		 */
 		EClass GROUP = eINSTANCE.getGroup();
@@ -350,11 +350,11 @@ public interface DomainPackage extends EPackage {
 		EAttribute GROUP__NAME = eINSTANCE.getGroup_Name();
 
 		/**
-		 * The meta object literal for the '{@link test.domain.domain.impl.AddressImpl <em>Address</em>}' class.
+		 * The meta object literal for the '{@link test.domain.impl.AddressImpl <em>Address</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see test.domain.domain.impl.AddressImpl
-		 * @see test.domain.domain.impl.DomainPackageImpl#getAddress()
+		 * @see test.domain.impl.AddressImpl
+		 * @see test.domain.impl.DomainPackageImpl#getAddress()
 		 * @generated
 		 */
 		EClass ADDRESS = eINSTANCE.getAddress();

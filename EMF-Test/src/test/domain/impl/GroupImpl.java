@@ -4,7 +4,7 @@
  *
  * $Id$
  */
-package test.domain.domain.impl;
+package test.domain.impl;
 
 import org.eclipse.emf.common.notify.Notification;
 
@@ -13,49 +13,49 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 
-import test.domain.domain.Address;
-import test.domain.domain.DomainPackage;
+import test.domain.DomainPackage;
+import test.domain.Group;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Address</b></em>'.
+ * An implementation of the model object '<em><b>Group</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link test.domain.domain.impl.AddressImpl#getLocal <em>Local</em>}</li>
+ *   <li>{@link test.domain.impl.GroupImpl#getName <em>Name</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class AddressImpl extends EObjectImpl implements Address {
+public class GroupImpl extends EObjectImpl implements Group {
 	/**
-	 * The default value of the '{@link #getLocal() <em>Local</em>}' attribute.
+	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getLocal()
+	 * @see #getName()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String LOCAL_EDEFAULT = null;
+	protected static final String NAME_EDEFAULT = null;
 
 	/**
-	 * The cached value of the '{@link #getLocal() <em>Local</em>}' attribute.
+	 * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getLocal()
+	 * @see #getName()
 	 * @generated
 	 * @ordered
 	 */
-	protected String local = LOCAL_EDEFAULT;
+	protected String name = NAME_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected AddressImpl() {
+	protected GroupImpl() {
 		super();
 	}
 
@@ -66,7 +66,7 @@ public class AddressImpl extends EObjectImpl implements Address {
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return DomainPackage.Literals.ADDRESS;
+		return DomainPackage.Literals.GROUP;
 	}
 
 	/**
@@ -74,8 +74,8 @@ public class AddressImpl extends EObjectImpl implements Address {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String getLocal() {
-		return local;
+	public String getName() {
+		return name;
 	}
 
 	/**
@@ -83,11 +83,11 @@ public class AddressImpl extends EObjectImpl implements Address {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setLocal(String newLocal) {
-		String oldLocal = local;
-		local = newLocal;
+	public void setName(String newName) {
+		String oldName = name;
+		name = newName;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, DomainPackage.ADDRESS__LOCAL, oldLocal, local));
+			eNotify(new ENotificationImpl(this, Notification.SET, DomainPackage.GROUP__NAME, oldName, name));
 	}
 
 	/**
@@ -98,8 +98,8 @@ public class AddressImpl extends EObjectImpl implements Address {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case DomainPackage.ADDRESS__LOCAL:
-				return getLocal();
+			case DomainPackage.GROUP__NAME:
+				return getName();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -112,8 +112,8 @@ public class AddressImpl extends EObjectImpl implements Address {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case DomainPackage.ADDRESS__LOCAL:
-				setLocal((String)newValue);
+			case DomainPackage.GROUP__NAME:
+				setName((String)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -127,8 +127,8 @@ public class AddressImpl extends EObjectImpl implements Address {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case DomainPackage.ADDRESS__LOCAL:
-				setLocal(LOCAL_EDEFAULT);
+			case DomainPackage.GROUP__NAME:
+				setName(NAME_EDEFAULT);
 				return;
 		}
 		super.eUnset(featureID);
@@ -142,8 +142,8 @@ public class AddressImpl extends EObjectImpl implements Address {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case DomainPackage.ADDRESS__LOCAL:
-				return LOCAL_EDEFAULT == null ? local != null : !LOCAL_EDEFAULT.equals(local);
+			case DomainPackage.GROUP__NAME:
+				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -158,10 +158,10 @@ public class AddressImpl extends EObjectImpl implements Address {
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (local: ");
-		result.append(local);
+		result.append(" (name: ");
+		result.append(name);
 		result.append(')');
 		return result.toString();
 	}
 
-} //AddressImpl
+} //GroupImpl

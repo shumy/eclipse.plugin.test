@@ -4,7 +4,7 @@
  *
  * $Id$
  */
-package test.domain.domain.util;
+package test.domain.util;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
@@ -13,14 +13,14 @@ import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
 
 import org.eclipse.emf.ecore.EObject;
 
-import test.domain.domain.*;
+import test.domain.*;
 
 /**
  * <!-- begin-user-doc -->
  * The <b>Adapter Factory</b> for the model.
  * It provides an adapter <code>createXXX</code> method for each class of the model.
  * <!-- end-user-doc -->
- * @see test.domain.domain.DomainPackage
+ * @see test.domain.DomainPackage
  * @generated
  */
 public class DomainAdapterFactory extends AdapterFactoryImpl {
@@ -104,13 +104,13 @@ public class DomainAdapterFactory extends AdapterFactoryImpl {
 
 
 	/**
-	 * Creates a new adapter for an object of class '{@link test.domain.domain.User <em>User</em>}'.
+	 * Creates a new adapter for an object of class '{@link test.domain.User <em>User</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see test.domain.domain.User
+	 * @see test.domain.User
 	 * @generated
 	 */
 	public Adapter createUserAdapter() {
@@ -118,13 +118,13 @@ public class DomainAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link test.domain.domain.Group <em>Group</em>}'.
+	 * Creates a new adapter for an object of class '{@link test.domain.Group <em>Group</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see test.domain.domain.Group
+	 * @see test.domain.Group
 	 * @generated
 	 */
 	public Adapter createGroupAdapter() {
@@ -132,13 +132,13 @@ public class DomainAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link test.domain.domain.Address <em>Address</em>}'.
+	 * Creates a new adapter for an object of class '{@link test.domain.Address <em>Address</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see test.domain.domain.Address
+	 * @see test.domain.Address
 	 * @generated
 	 */
 	public Adapter createAddressAdapter() {

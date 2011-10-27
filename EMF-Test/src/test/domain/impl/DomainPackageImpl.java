@@ -4,7 +4,7 @@
  *
  * $Id$
  */
-package test.domain.domain.impl;
+package test.domain.impl;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
@@ -13,11 +13,11 @@ import org.eclipse.emf.ecore.EReference;
 
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 
-import test.domain.domain.Address;
-import test.domain.domain.DomainFactory;
-import test.domain.domain.DomainPackage;
-import test.domain.domain.Group;
-import test.domain.domain.User;
+import test.domain.Address;
+import test.domain.DomainFactory;
+import test.domain.DomainPackage;
+import test.domain.Group;
+import test.domain.User;
 
 /**
  * <!-- begin-user-doc -->
@@ -58,7 +58,7 @@ public class DomainPackageImpl extends EPackageImpl implements DomainPackage {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see org.eclipse.emf.ecore.EPackage.Registry
-	 * @see test.domain.domain.DomainPackage#eNS_URI
+	 * @see test.domain.DomainPackage#eNS_URI
 	 * @see #init()
 	 * @generated
 	 */

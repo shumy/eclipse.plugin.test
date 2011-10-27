@@ -4,7 +4,7 @@
  *
  * $Id$
  */
-package test.domain.domain;
+package test.domain;
 
 import org.eclipse.emf.common.util.EList;
 
@@ -18,14 +18,14 @@ import org.eclipse.emf.ecore.EObject;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link test.domain.domain.User#getName <em>Name</em>}</li>
- *   <li>{@link test.domain.domain.User#getPass <em>Pass</em>}</li>
- *   <li>{@link test.domain.domain.User#getGroups <em>Groups</em>}</li>
- *   <li>{@link test.domain.domain.User#getAddresses <em>Addresses</em>}</li>
+ *   <li>{@link test.domain.User#getName <em>Name</em>}</li>
+ *   <li>{@link test.domain.User#getPass <em>Pass</em>}</li>
+ *   <li>{@link test.domain.User#getGroups <em>Groups</em>}</li>
+ *   <li>{@link test.domain.User#getAddresses <em>Addresses</em>}</li>
  * </ul>
  * </p>
  *
- * @see test.domain.domain.DomainPackage#getUser()
+ * @see test.domain.DomainPackage#getUser()
  * @model
  * @generated
  */
@@ -40,14 +40,14 @@ public interface User extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Name</em>' attribute.
 	 * @see #setName(String)
-	 * @see test.domain.domain.DomainPackage#getUser_Name()
+	 * @see test.domain.DomainPackage#getUser_Name()
 	 * @model
 	 * @generated
 	 */
 	String getName();
 
 	/**
-	 * Sets the value of the '{@link test.domain.domain.User#getName <em>Name</em>}' attribute.
+	 * Sets the value of the '{@link test.domain.User#getName <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Name</em>' attribute.
@@ -66,14 +66,14 @@ public interface User extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Pass</em>' attribute.
 	 * @see #setPass(String)
-	 * @see test.domain.domain.DomainPackage#getUser_Pass()
+	 * @see test.domain.DomainPackage#getUser_Pass()
 	 * @model
 	 * @generated
 	 */
 	String getPass();
 
 	/**
-	 * Sets the value of the '{@link test.domain.domain.User#getPass <em>Pass</em>}' attribute.
+	 * Sets the value of the '{@link test.domain.User#getPass <em>Pass</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Pass</em>' attribute.
@@ -84,7 +84,7 @@ public interface User extends EObject {
 
 	/**
 	 * Returns the value of the '<em><b>Groups</b></em>' reference list.
-	 * The list contents are of type {@link test.domain.domain.Group}.
+	 * The list contents are of type {@link test.domain.Group}.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Groups</em>' reference list isn't clear,
@@ -92,7 +92,7 @@ public interface User extends EObject {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Groups</em>' reference list.
-	 * @see test.domain.domain.DomainPackage#getUser_Groups()
+	 * @see test.domain.DomainPackage#getUser_Groups()
 	 * @model
 	 * @generated
 	 */
@@ -100,7 +100,7 @@ public interface User extends EObject {
 
 	/**
 	 * Returns the value of the '<em><b>Addresses</b></em>' containment reference list.
-	 * The list contents are of type {@link test.domain.domain.Address}.
+	 * The list contents are of type {@link test.domain.Address}.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Addresses</em>' containment reference list isn't clear,
@@ -108,7 +108,7 @@ public interface User extends EObject {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Addresses</em>' containment reference list.
-	 * @see test.domain.domain.DomainPackage#getUser_Addresses()
+	 * @see test.domain.DomainPackage#getUser_Addresses()
 	 * @model containment="true"
 	 * @generated
 	 */

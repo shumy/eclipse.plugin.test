@@ -4,7 +4,7 @@
  *
  * $Id$
  */
-package test.domain.domain;
+package test.domain;
 
 import org.eclipse.emf.ecore.EObject;
 
@@ -16,11 +16,11 @@ import org.eclipse.emf.ecore.EObject;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link test.domain.domain.Address#getLocal <em>Local</em>}</li>
+ *   <li>{@link test.domain.Address#getLocal <em>Local</em>}</li>
  * </ul>
  * </p>
  *
- * @see test.domain.domain.DomainPackage#getAddress()
+ * @see test.domain.DomainPackage#getAddress()
  * @model
  * @generated
  */
@@ -35,14 +35,14 @@ public interface Address extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Local</em>' attribute.
 	 * @see #setLocal(String)
-	 * @see test.domain.domain.DomainPackage#getAddress_Local()
+	 * @see test.domain.DomainPackage#getAddress_Local()
 	 * @model
 	 * @generated
 	 */
 	String getLocal();
 
 	/**
-	 * Sets the value of the '{@link test.domain.domain.Address#getLocal <em>Local</em>}' attribute.
+	 * Sets the value of the '{@link test.domain.Address#getLocal <em>Local</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Local</em>' attribute.

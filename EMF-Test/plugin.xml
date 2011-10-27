@@ -13,7 +13,7 @@
    <extension point="org.eclipse.emf.ecore.generated_package">
       <package
             uri="http://domain/1.0"
-            class="test.domain.domain.DomainPackage"
+            class="test.domain.DomainPackage"
             genModel="model/domain.genmodel"/>
    </extension>
 

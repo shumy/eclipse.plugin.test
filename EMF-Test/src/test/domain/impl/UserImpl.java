@@ -4,7 +4,7 @@
  *
  * $Id$
  */
-package test.domain.domain.impl;
+package test.domain.impl;
 
 import java.util.Collection;
 
@@ -23,10 +23,10 @@ import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
-import test.domain.domain.Address;
-import test.domain.domain.DomainPackage;
-import test.domain.domain.Group;
-import test.domain.domain.User;
+import test.domain.Address;
+import test.domain.DomainPackage;
+import test.domain.Group;
+import test.domain.User;
 
 /**
  * <!-- begin-user-doc -->
@@ -35,10 +35,10 @@ import test.domain.domain.User;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link test.domain.domain.impl.UserImpl#getName <em>Name</em>}</li>
- *   <li>{@link test.domain.domain.impl.UserImpl#getPass <em>Pass</em>}</li>
- *   <li>{@link test.domain.domain.impl.UserImpl#getGroups <em>Groups</em>}</li>
- *   <li>{@link test.domain.domain.impl.UserImpl#getAddresses <em>Addresses</em>}</li>
+ *   <li>{@link test.domain.impl.UserImpl#getName <em>Name</em>}</li>
+ *   <li>{@link test.domain.impl.UserImpl#getPass <em>Pass</em>}</li>
+ *   <li>{@link test.domain.impl.UserImpl#getGroups <em>Groups</em>}</li>
+ *   <li>{@link test.domain.impl.UserImpl#getAddresses <em>Addresses</em>}</li>
  * </ul>
  * </p>
  *

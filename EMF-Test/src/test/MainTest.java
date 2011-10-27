@@ -6,8 +6,8 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
 
-import test.domain.domain.DomainFactory;
-import test.domain.domain.User;
+import test.domain.DomainFactory;
+import test.domain.User;
 
 public class MainTest {
 

@@ -4,7 +4,7 @@
  *
  * $Id$
  */
-package test.domain.domain.impl;
+package test.domain.impl;
 
 import org.eclipse.emf.common.notify.Notification;
 
@@ -13,49 +13,49 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 
-import test.domain.domain.DomainPackage;
-import test.domain.domain.Group;
+import test.domain.Address;
+import test.domain.DomainPackage;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Group</b></em>'.
+ * An implementation of the model object '<em><b>Address</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link test.domain.domain.impl.GroupImpl#getName <em>Name</em>}</li>
+ *   <li>{@link test.domain.impl.AddressImpl#getLocal <em>Local</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class GroupImpl extends EObjectImpl implements Group {
+public class AddressImpl extends EObjectImpl implements Address {
 	/**
-	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
+	 * The default value of the '{@link #getLocal() <em>Local</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getName()
+	 * @see #getLocal()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String NAME_EDEFAULT = null;
+	protected static final String LOCAL_EDEFAULT = null;
 
 	/**
-	 * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
+	 * The cached value of the '{@link #getLocal() <em>Local</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getName()
+	 * @see #getLocal()
 	 * @generated
 	 * @ordered
 	 */
-	protected String name = NAME_EDEFAULT;
+	protected String local = LOCAL_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected GroupImpl() {
+	protected AddressImpl() {
 		super();
 	}
 
@@ -66,7 +66,7 @@ public class GroupImpl extends EObjectImpl implements Group {
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return DomainPackage.Literals.GROUP;
+		return DomainPackage.Literals.ADDRESS;
 	}
 
 	/**
@@ -74,8 +74,8 @@ public class GroupImpl extends EObjectImpl implements Group {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String getName() {
-		return name;
+	public String getLocal() {
+		return local;
 	}
 
 	/**
@@ -83,11 +83,11 @@ public class GroupImpl extends EObjectImpl implements Group {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setName(String newName) {
-		String oldName = name;
-		name = newName;
+	public void setLocal(String newLocal) {
+		String oldLocal = local;
+		local = newLocal;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, DomainPackage.GROUP__NAME, oldName, name));
+			eNotify(new ENotificationImpl(this, Notification.SET, DomainPackage.ADDRESS__LOCAL, oldLocal, local));
 	}
 
 	/**
@@ -98,8 +98,8 @@ public class GroupImpl extends EObjectImpl implements Group {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case DomainPackage.GROUP__NAME:
-				return getName();
+			case DomainPackage.ADDRESS__LOCAL:
+				return getLocal();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -112,8 +112,8 @@ public class GroupImpl extends EObjectImpl implements Group {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case DomainPackage.GROUP__NAME:
-				setName((String)newValue);
+			case DomainPackage.ADDRESS__LOCAL:
+				setLocal((String)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -127,8 +127,8 @@ public class GroupImpl extends EObjectImpl implements Group {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case DomainPackage.GROUP__NAME:
-				setName(NAME_EDEFAULT);
+			case DomainPackage.ADDRESS__LOCAL:
+				setLocal(LOCAL_EDEFAULT);
 				return;
 		}
 		super.eUnset(featureID);
@@ -142,8 +142,8 @@ public class GroupImpl extends EObjectImpl implements Group {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case DomainPackage.GROUP__NAME:
-				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+			case DomainPackage.ADDRESS__LOCAL:
+				return LOCAL_EDEFAULT == null ? local != null : !LOCAL_EDEFAULT.equals(local);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -158,10 +158,10 @@ public class GroupImpl extends EObjectImpl implements Group {
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (name: ");
-		result.append(name);
+		result.append(" (local: ");
+		result.append(local);
 		result.append(')');
 		return result.toString();
 	}
 
-} //GroupImpl
+} //AddressImpl
