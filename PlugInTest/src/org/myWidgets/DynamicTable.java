@@ -1,6 +1,7 @@
 package org.myWidgets;
 
 import java.util.Arrays;
+import java.util.Date;
 
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Table;
@@ -15,6 +16,7 @@ import org.eclipse.swt.events.ControlAdapter;
 import org.eclipse.swt.events.ControlEvent;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.FillLayout;
+import org.myWidgets.helper.DateHelper;
 import org.myWidgets.helper.ReflectionHelper;
 import org.myWidgets.helper.TableViewerColumnSorter;
 import org.myWidgets.helper.TextHelper;
@@ -42,14 +44,17 @@ public class DynamicTable extends Composite {
 		
 		for(int i=0; i<capitalizedFields.length; ++i) {
 			final String propertyName = capitalizedFields[i];
-			//final Class<?> propertyType = ReflectionHelper.INSTANCE.getPropertyType(dataType, propertyName);
 			
 			TableViewerColumn tableViewerColumn = new TableViewerColumn(tableViewer, SWT.NONE);
 			tableViewerColumn.setLabelProvider(new ColumnLabelProvider() {
 				@Override
 				public String getText(Object element) {
-					//TODO: only working for strings at the moment
-					return ReflectionHelper.INSTANCE.getPropertyValue(element, propertyName);
+					Object value = ReflectionHelper.INSTANCE.getPropertyValue(element, propertyName);
+	
+					if(value instanceof Date)
+						return DateHelper.INSTANCE.format((Date)value);
+					else
+						return value == null? null: value.toString();
 				}
 			});
 			
@@ -60,9 +65,11 @@ public class DynamicTable extends Composite {
 					Object v1 = ReflectionHelper.INSTANCE.getPropertyValue(e1, propertyName);
 					Object v2 = ReflectionHelper.INSTANCE.getPropertyValue(e2, propertyName);
 					
+					if(v1 == null) return 1;
 					if(v1 instanceof Comparable) { //check for null values included in instanceof 
 						Comparable<Object> c1 = (Comparable<Object>) v1;
 						Comparable<Object> c2 = (Comparable<Object>) v2;
+						if(c2 == null) return -1;
 						return c1.compareTo(c2);
 					} 
 					
@@ -88,8 +95,11 @@ public class DynamicTable extends Composite {
 	}
 	
 	public void setColumnWeights(int ...newWeights) {
-		for(int i=0; i<columnWeight.length; ++i)
+		for(int i=0; i<columnWeight.length; ++i) {
+			if(i == newWeights.length) break;
 			columnWeight[i] = newWeights[i];
+		}
+			
 		calculateSumOfColumnWeight();
 	}
 	
@@ -119,51 +129,4 @@ public class DynamicTable extends Composite {
 		for(int v: columnWeight) sum+=v;
 		sumOfColumnWeight = sum;
 	}
-	
-	/*public TestComposite(Composite parent, int style) {
-		super(parent, style);
-		setLayout(new FillLayout(SWT.HORIZONTAL));
-		
-		{
-			tableViewer = new TableViewer(this, SWT.BORDER | SWT.FULL_SELECTION);
-			tableViewer.setContentProvider(new ArrayContentProvider());
-			table = tableViewer.getTable();
-			table.setHeaderVisible(true);
-			table.setLinesVisible(true);
-			{
-				TableViewerColumn tableViewerColumn = new TableViewerColumn(tableViewer, SWT.NONE);
-				new TableViewerColumnSorter(tableViewerColumn) {
-					@Override
-					protected int doCompare(Viewer viewer, Object e1, Object e2) {
-						Person person1 = (Person) e1;
-						Person person2 = (Person) e2;
-						
-						return person1.getFullName().compareTo(person2.getFullName());
-					}
-				};
-				tableViewerColumn.setLabelProvider(new ColumnLabelProvider() {
-					public String getText(Object element) {
-						return ((Person)element).getFullName();
-					}
-				});
-				TableColumn tblclmnName = tableViewerColumn.getColumn();
-				tblclmnName.setWidth(100);
-				tblclmnName.setText("Name");
-			}
-			
-			{
-				TableViewerColumn tableViewerColumn_1 = new TableViewerColumn(tableViewer, SWT.NONE);
-				tableViewerColumn_1.setLabelProvider(new ColumnLabelProvider() {
-					public String getText(Object element) {
-						return ((Person)element).getAddress();
-					}
-				});
-				TableColumn tblclmnAddress = tableViewerColumn_1.getColumn();
-				tblclmnAddress.setWidth(100);
-				tblclmnAddress.setText("Address");
-			}
-		}
-	}*/
-	
-
 }

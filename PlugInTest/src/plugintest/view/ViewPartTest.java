@@ -22,7 +22,7 @@ public class ViewPartTest extends ViewPart {
 	 */
 	@Override
 	public void createPartControl(Composite parent) {
-		DynamicTable testComposite = new DynamicTable(parent, Person.class, new String[]{"FullName", "Address"});
+		DynamicTable testComposite = new DynamicTable(parent, Person.class, new String[]{"FullName", "Address", "Birthday"});
 		testComposite.getTableViewer().setInput(PersonData.INNSTANCE.getPersons());
 		testComposite.setColumnWeights(2, 1);
 		
