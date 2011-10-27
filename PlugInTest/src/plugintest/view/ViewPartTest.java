@@ -22,9 +22,10 @@ public class ViewPartTest extends ViewPart {
 	 */
 	@Override
 	public void createPartControl(Composite parent) {
-		//TestComposite testComposite = new TestComposite(parent, SWT.NONE);
-		DynamicTable testComposite = new DynamicTable(parent, Person.class, new String[]{"FullName", "Address"}, new int[]{100, 200});
+		DynamicTable testComposite = new DynamicTable(parent, Person.class, new String[]{"FullName", "Address"});
 		testComposite.getTableViewer().setInput(PersonData.INNSTANCE.getPersons());
+		testComposite.setColumnWeights(2, 1);
+		
 		//toolkit.adapt(testComposite);
 		//toolkit.paintBordersFor(testComposite);
 		
