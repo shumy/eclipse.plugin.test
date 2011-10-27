@@ -73,11 +73,6 @@
             id="plugintest.view.ViewPartTest"
             name="New ViewPart">
       </view>
-      <view
-            class="plugintest.view.OtherPartView"
-            id="plugintest.view.OtherPartView"
-            name="OtherView">
-      </view>
    </extension>
 
 </plugin>
