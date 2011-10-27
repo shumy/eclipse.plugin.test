@@ -9,12 +9,14 @@ import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ColumnLabelProvider;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
+import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ControlAdapter;
 import org.eclipse.swt.events.ControlEvent;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.FillLayout;
 import org.myWidgets.helper.ReflectionHelper;
+import org.myWidgets.helper.TableViewerColumnSorter;
 import org.myWidgets.helper.TextHelper;
 
 public class DynamicTable extends Composite {
@@ -46,11 +48,27 @@ public class DynamicTable extends Composite {
 			tableViewerColumn.setLabelProvider(new ColumnLabelProvider() {
 				@Override
 				public String getText(Object element) {
+					//TODO: only working for strings at the moment
 					return ReflectionHelper.INSTANCE.getPropertyValue(element, propertyName);
 				}
 			});
 			
-			//TODO: provide column sorter with property type information
+			new TableViewerColumnSorter(tableViewerColumn) {
+				@SuppressWarnings("unchecked")
+				@Override
+				protected int doCompare(Viewer viewer, Object e1, Object e2) {
+					Object v1 = ReflectionHelper.INSTANCE.getPropertyValue(e1, propertyName);
+					Object v2 = ReflectionHelper.INSTANCE.getPropertyValue(e2, propertyName);
+					
+					if(v1 instanceof Comparable) { //check for null values included in instanceof 
+						Comparable<Object> c1 = (Comparable<Object>) v1;
+						Comparable<Object> c2 = (Comparable<Object>) v2;
+						return c1.compareTo(c2);
+					} 
+					
+					return 0;
+				}
+			};
 			
 			
 			TableColumn tableColumn = tableViewerColumn.getColumn();
@@ -62,7 +80,7 @@ public class DynamicTable extends Composite {
 		table.addControlListener(new ControlAdapter() {
 			public void controlResized(ControlEvent e) {
 				resizeColumns();
-				super.controlResized(e);
+				//super.controlResized(e);
 			}
 		});
 		
