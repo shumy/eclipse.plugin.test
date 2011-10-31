@@ -1,2 +1,4 @@
 <?xml version="1.0" encoding="ASCII"?>
-<domain:User xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:domain="http://domain/1.0" name="Micael" pass="password"/>
+<domain:User xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:domain="http://domain/1.0" xmlns:domain.ext="http://domain/1.1" name="Micael" pass="password">
+  <addresses xsi:type="domain.ext:XAddress" local="Aveiro" other="Other value"/>
+</domain:User>
