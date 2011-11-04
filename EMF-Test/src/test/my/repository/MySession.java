@@ -9,13 +9,16 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 public class MySession {
 	
 	private final Adapter eAdapter = new AdapterImpl() {
-		public void notifyChanged(Notification notification) {			
+		public void notifyChanged(Notification notification) {
+			System.out.println(notification.getPosition());
+			
 			MyContext.getData().getTransaction().addChange(
 					(EObject)notification.getNotifier(),
 					(EStructuralFeature)notification.getFeature(),
 					notification.getEventType(),
 					notification.getOldValue(),
-					notification.getNewValue());
+					notification.getNewValue(),
+					notification.getPosition());
 		}
 	};
 	

@@ -9,10 +9,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
-import test.my.Tree;
-
 public class MyTransaction {
-	
 	
 	public static class Change {
 		public final int type;
@@ -21,13 +18,15 @@ public class MyTransaction {
 		
 		public final Object oldValue;
 		public final Object newValue;
+		public final int listIndex;
 		
-		public Change(int type, EObject entity, EStructuralFeature feature, Object oldValue, Object newValue) {
+		public Change(int type, EObject entity, EStructuralFeature feature, Object oldValue, Object newValue, int listIndex) {
 			this.type = type;
 			this.entity = entity;
 			this.feature = feature;
 			this.oldValue = oldValue;
 			this.newValue = newValue;
+			this.listIndex = listIndex;
 		}
 		
 		@Override
@@ -60,8 +59,8 @@ public class MyTransaction {
 	String getId() {return txId;}
 	
 	
-	void addChange(EObject entity, EStructuralFeature feature, int type, Object oldValue, Object newValue) {
-		changes.add(new Change(type, entity, feature, oldValue, newValue));
+	void addChange(EObject entity, EStructuralFeature feature, int type, Object oldValue, Object newValue, int listIndex) {
+		changes.add(new Change(type, entity, feature, oldValue, newValue, listIndex));
 	}
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
@@ -77,10 +76,10 @@ public class MyTransaction {
 					break;
 				
 				case Notification.ADD:
-					((EList)ch.entity.eGet(ch.feature)).remove(ch.newValue);
+					((EList)ch.entity.eGet(ch.feature)).remove(ch.listIndex);
 					break;
 				case Notification.REMOVE:
-					((EList)ch.entity.eGet(ch.feature)).add(ch.oldValue);
+					((EList)ch.entity.eGet(ch.feature)).add(ch.listIndex, ch.oldValue);
 					break;
 			}
 			ch.entity.eSetDeliver(true);

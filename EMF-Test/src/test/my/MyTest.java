@@ -24,15 +24,25 @@ public class MyTest {
 				session.persist(user);
 			session.commit();
 			
-				Address address = dFactory.createAddress();
-				address.setLocal("Aveiro");
+				Address address1 = dFactory.createAddress();
+				address1.setLocal("Aveiro");
 				
-				user.getAddresses().add(address);
+				Address address2 = dFactory.createAddress();
+				address2.setLocal("Lisboa");
+				
+				Address address3 = dFactory.createAddress();
+				address3.setLocal("Porto");
+				
+				user.getAddresses().add(address1);
+				user.getAddresses().add(address2);
+				user.getAddresses().add(address3);
 				user.setName("Pedrosa 1");
 				user.setName("Pedrosa 2");
 			session.commit();
 			
-				user.getAddresses().remove(address);
+				user.getAddresses().remove(address2);
+				user.getAddresses().remove(address1);
+				user.getAddresses().remove(address3);
 			session.rollback();
 			
 			System.out.println("USER: " + user.getName());
