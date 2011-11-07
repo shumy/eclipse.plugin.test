@@ -47,11 +47,14 @@ public class MyTransactionData {
 	}
 	
 	public void deleteEntity(String id) {
-		if(newEntities.contains(id)) {
+		//delete all change history:
+		properties.remove(id);
+		references.remove(id);
+		
+		if(newEntities.contains(id))
 			newEntities.remove(id);
-			return;
-		}
-		deleteEntities.add(id);
+		else
+			deleteEntities.add(id);
 	}
 	
 	public void addProperty(String entityId, String propName, Object value) {

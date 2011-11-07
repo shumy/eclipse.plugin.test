@@ -17,6 +17,7 @@ public class MySession {
 	private final Adapter eAdapter = new AdapterImpl() {
 		public void notifyChanged(Notification notification) {
 			EStructuralFeature feature = (EStructuralFeature)notification.getFeature();
+			if(feature == null) return;
 			
 			if(feature.getName().equals("id"))
 				throw new RuntimeException("Changing ID from an Entity is not allowed! ID's are created automatic.");
@@ -49,8 +50,8 @@ public class MySession {
 	
 	public void delete(Entity entity) {
 		if(entity.getId() != null) {
-			MyContext.getData().getTransaction().deleteEntity(entity);
 			entity.eAdapters().remove(eAdapter);
+			MyContext.getData().getTransaction().deleteEntity(entity);
 		}
 	}
 	

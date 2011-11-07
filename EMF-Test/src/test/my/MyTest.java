@@ -39,16 +39,27 @@ public class MyTest {
 				user.setName("Pedrosa 1");
 				user.setName("Pedrosa 2");
 			session.commit();
+				
+				System.out.println("USER: " + user.getName());
+				for(Address add: user.getAddresses()) {
+					System.out.println("  ADDRESS: " + add.getLocal());
+				}
+				System.out.println("");
 			
 				user.getAddresses().remove(address2);
 				user.getAddresses().remove(address1);
 				user.getAddresses().remove(address3);
 			session.commit();
 			
-			System.out.println("USER: " + user.getName());
-			for(Address add: user.getAddresses()) {
-				System.out.println("  ADDRESS: " + add.getLocal());
-			}
+				System.out.println("USER: " + user.getName());
+				for(Address add: user.getAddresses()) {
+					System.out.println("  ADDRESS: " + add.getLocal());
+				}
+				System.out.println("");
+			
+				user.setPass("new pass");
+				session.delete(user);
+			session.commit();
 			
 		} finally {
 			session.close();
