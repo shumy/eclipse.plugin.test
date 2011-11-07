@@ -60,6 +60,34 @@ public interface DomainPackage extends EPackage {
 	DomainPackage eINSTANCE = test.domain.impl.DomainPackageImpl.init();
 
 	/**
+	 * The meta object id for the '{@link test.domain.impl.EntityImpl <em>Entity</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see test.domain.impl.EntityImpl
+	 * @see test.domain.impl.DomainPackageImpl#getEntity()
+	 * @generated
+	 */
+	int ENTITY = 3;
+
+	/**
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ENTITY__ID = 0;
+
+	/**
+	 * The number of structural features of the '<em>Entity</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ENTITY_FEATURE_COUNT = 1;
+
+	/**
 	 * The meta object id for the '{@link test.domain.impl.UserImpl <em>User</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -70,13 +98,22 @@ public interface DomainPackage extends EPackage {
 	int USER = 0;
 
 	/**
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int USER__ID = ENTITY__ID;
+
+	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int USER__NAME = 0;
+	int USER__NAME = ENTITY_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Pass</b></em>' attribute.
@@ -85,7 +122,7 @@ public interface DomainPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int USER__PASS = 1;
+	int USER__PASS = ENTITY_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Groups</b></em>' reference list.
@@ -94,7 +131,7 @@ public interface DomainPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int USER__GROUPS = 2;
+	int USER__GROUPS = ENTITY_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Addresses</b></em>' containment reference list.
@@ -103,7 +140,7 @@ public interface DomainPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int USER__ADDRESSES = 3;
+	int USER__ADDRESSES = ENTITY_FEATURE_COUNT + 3;
 
 	/**
 	 * The number of structural features of the '<em>User</em>' class.
@@ -112,7 +149,7 @@ public interface DomainPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int USER_FEATURE_COUNT = 4;
+	int USER_FEATURE_COUNT = ENTITY_FEATURE_COUNT + 4;
 
 	/**
 	 * The meta object id for the '{@link test.domain.impl.GroupImpl <em>Group</em>}' class.
@@ -125,13 +162,22 @@ public interface DomainPackage extends EPackage {
 	int GROUP = 1;
 
 	/**
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GROUP__ID = ENTITY__ID;
+
+	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int GROUP__NAME = 0;
+	int GROUP__NAME = ENTITY_FEATURE_COUNT + 0;
 
 	/**
 	 * The number of structural features of the '<em>Group</em>' class.
@@ -140,7 +186,7 @@ public interface DomainPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int GROUP_FEATURE_COUNT = 1;
+	int GROUP_FEATURE_COUNT = ENTITY_FEATURE_COUNT + 1;
 
 	/**
 	 * The meta object id for the '{@link test.domain.impl.AddressImpl <em>Address</em>}' class.
@@ -153,13 +199,22 @@ public interface DomainPackage extends EPackage {
 	int ADDRESS = 2;
 
 	/**
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ADDRESS__ID = ENTITY__ID;
+
+	/**
 	 * The feature id for the '<em><b>Local</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int ADDRESS__LOCAL = 0;
+	int ADDRESS__LOCAL = ENTITY_FEATURE_COUNT + 0;
 
 	/**
 	 * The number of structural features of the '<em>Address</em>' class.
@@ -168,7 +223,7 @@ public interface DomainPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ADDRESS_FEATURE_COUNT = 1;
+	int ADDRESS_FEATURE_COUNT = ENTITY_FEATURE_COUNT + 1;
 
 
 	/**
@@ -266,6 +321,27 @@ public interface DomainPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getAddress_Local();
+
+	/**
+	 * Returns the meta object for class '{@link test.domain.Entity <em>Entity</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Entity</em>'.
+	 * @see test.domain.Entity
+	 * @generated
+	 */
+	EClass getEntity();
+
+	/**
+	 * Returns the meta object for the attribute '{@link test.domain.Entity#getId <em>Id</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Id</em>'.
+	 * @see test.domain.Entity#getId()
+	 * @see #getEntity()
+	 * @generated
+	 */
+	EAttribute getEntity_Id();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -366,6 +442,24 @@ public interface DomainPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute ADDRESS__LOCAL = eINSTANCE.getAddress_Local();
+
+		/**
+		 * The meta object literal for the '{@link test.domain.impl.EntityImpl <em>Entity</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see test.domain.impl.EntityImpl
+		 * @see test.domain.impl.DomainPackageImpl#getEntity()
+		 * @generated
+		 */
+		EClass ENTITY = eINSTANCE.getEntity();
+
+		/**
+		 * The meta object literal for the '<em><b>Id</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute ENTITY__ID = eINSTANCE.getEntity_Id();
 
 	}
 

@@ -29,7 +29,7 @@ import test.domain.DomainPackage;
  *
  * @generated
  */
-public class AddressImpl extends EObjectImpl implements Address {
+public class AddressImpl extends EntityImpl implements Address {
 	/**
 	 * The default value of the '{@link #getLocal() <em>Local</em>}' attribute.
 	 * <!-- begin-user-doc -->

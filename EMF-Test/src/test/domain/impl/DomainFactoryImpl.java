@@ -63,6 +63,7 @@ public class DomainFactoryImpl extends EFactoryImpl implements DomainFactory {
 			case DomainPackage.USER: return createUser();
 			case DomainPackage.GROUP: return createGroup();
 			case DomainPackage.ADDRESS: return createAddress();
+			case DomainPackage.ENTITY: return createEntity();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -96,6 +97,16 @@ public class DomainFactoryImpl extends EFactoryImpl implements DomainFactory {
 	public Address createAddress() {
 		AddressImpl address = new AddressImpl();
 		return address;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Entity createEntity() {
+		EntityImpl entity = new EntityImpl();
+		return entity;
 	}
 
 	/**

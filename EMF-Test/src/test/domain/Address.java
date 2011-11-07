@@ -24,7 +24,7 @@ import org.eclipse.emf.ecore.EObject;
  * @model
  * @generated
  */
-public interface Address extends EObject {
+public interface Address extends Entity {
 	/**
 	 * Returns the value of the '<em><b>Local</b></em>' attribute.
 	 * <!-- begin-user-doc -->

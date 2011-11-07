@@ -44,7 +44,7 @@ import test.domain.User;
  *
  * @generated
  */
-public class UserImpl extends EObjectImpl implements User {
+public class UserImpl extends EntityImpl implements User {
 	/**
 	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->

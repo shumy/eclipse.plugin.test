@@ -23,7 +23,7 @@ public class MyTest {
 				
 				session.persist(user);
 			session.commit();
-			
+				
 				Address address1 = dFactory.createAddress();
 				address1.setLocal("Aveiro");
 				
@@ -43,7 +43,7 @@ public class MyTest {
 				user.getAddresses().remove(address2);
 				user.getAddresses().remove(address1);
 				user.getAddresses().remove(address3);
-			session.rollback();
+			session.commit();
 			
 			System.out.println("USER: " + user.getName());
 			for(Address add: user.getAddresses()) {

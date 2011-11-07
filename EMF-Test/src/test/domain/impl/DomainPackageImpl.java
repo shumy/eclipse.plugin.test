@@ -16,6 +16,7 @@ import org.eclipse.emf.ecore.impl.EPackageImpl;
 import test.domain.Address;
 import test.domain.DomainFactory;
 import test.domain.DomainPackage;
+import test.domain.Entity;
 import test.domain.Group;
 import test.domain.User;
 
@@ -46,6 +47,13 @@ public class DomainPackageImpl extends EPackageImpl implements DomainPackage {
 	 * @generated
 	 */
 	private EClass addressEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass entityEClass = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
@@ -194,6 +202,24 @@ public class DomainPackageImpl extends EPackageImpl implements DomainPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getEntity() {
+		return entityEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getEntity_Id() {
+		return (EAttribute)entityEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public DomainFactory getDomainFactory() {
 		return (DomainFactory)getEFactoryInstance();
 	}
@@ -228,6 +254,9 @@ public class DomainPackageImpl extends EPackageImpl implements DomainPackage {
 
 		addressEClass = createEClass(ADDRESS);
 		createEAttribute(addressEClass, ADDRESS__LOCAL);
+
+		entityEClass = createEClass(ENTITY);
+		createEAttribute(entityEClass, ENTITY__ID);
 	}
 
 	/**
@@ -258,6 +287,9 @@ public class DomainPackageImpl extends EPackageImpl implements DomainPackage {
 		// Set bounds for type parameters
 
 		// Add supertypes to classes
+		userEClass.getESuperTypes().add(this.getEntity());
+		groupEClass.getESuperTypes().add(this.getEntity());
+		addressEClass.getESuperTypes().add(this.getEntity());
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(userEClass, User.class, "User", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -271,6 +303,9 @@ public class DomainPackageImpl extends EPackageImpl implements DomainPackage {
 
 		initEClass(addressEClass, Address.class, "Address", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getAddress_Local(), ecorePackage.getEString(), "local", null, 0, 1, Address.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(entityEClass, Entity.class, "Entity", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getEntity_Id(), ecorePackage.getEString(), "id", null, 0, 1, Entity.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Create resource
 		createResource(eNS_URI);

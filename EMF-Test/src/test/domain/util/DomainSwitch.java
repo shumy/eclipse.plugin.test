@@ -75,18 +75,27 @@ public class DomainSwitch<T> extends Switch<T> {
 			case DomainPackage.USER: {
 				User user = (User)theEObject;
 				T result = caseUser(user);
+				if (result == null) result = caseEntity(user);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
 			case DomainPackage.GROUP: {
 				Group group = (Group)theEObject;
 				T result = caseGroup(group);
+				if (result == null) result = caseEntity(group);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
 			case DomainPackage.ADDRESS: {
 				Address address = (Address)theEObject;
 				T result = caseAddress(address);
+				if (result == null) result = caseEntity(address);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case DomainPackage.ENTITY: {
+				Entity entity = (Entity)theEObject;
+				T result = caseEntity(entity);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -136,6 +145,21 @@ public class DomainSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseAddress(Address object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Entity</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Entity</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseEntity(Entity object) {
 		return null;
 	}
 
