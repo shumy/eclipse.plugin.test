@@ -1,4 +1,4 @@
-package test.my.repository;
+package test.my.impl.repository;
 
 import java.util.UUID;
 
@@ -8,11 +8,11 @@ import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
 import test.domain.Entity;
+import test.my.ISession;
+import test.my.spi.IRouter;
+import test.my.spi.context.MyContext;
 
-public class MySession {
-	
-	//TODO: entity cache !!! (search by id)
-	//private HashMap<String, Entity> entities = new HashMap<String, Entity>();
+public class MySession implements ISession {
 	
 	private final Adapter eAdapter = new AdapterImpl() {
 		public void notifyChanged(Notification notification) {
@@ -32,14 +32,17 @@ public class MySession {
 		}
 	};
 	
+	private final IRouter router;
 	
-	public MySession() {
+	public MySession(IRouter router) {
+		this.router = router;
 		MyContext.getData().newTransaction(this);
 	}
 	
+	@Override
 	public void persist(Entity entity) {
 		if(entity.getId() == null) {
-			entity.setId(UUID.randomUUID().toString());
+			entity.setId("tmp-" + UUID.randomUUID().toString());
 			entity.eAdapters().add(eAdapter);
 			MyContext.getData().getTransaction().newEntity(entity);
 		} else if(!entity.eAdapters().contains(eAdapter)) { //ID not null, but contains adapter!!! ID was changed manually!
@@ -48,6 +51,7 @@ public class MySession {
 		}
 	}
 	
+	@Override
 	public void delete(Entity entity) {
 		if(entity.getId() != null) {
 			entity.eAdapters().remove(eAdapter);
@@ -55,19 +59,19 @@ public class MySession {
 		}
 	}
 	
+	@Override
 	public void commit() {
-		//TODO: send to server => if OK => commit local data => additional changes reported by the server => (id, ...)
-		System.out.println("COMMIT: ");
-		System.out.println(MyContext.getData().getTransaction().getChangeResume());
-		
-		MyContext.getData().newTransaction(this);
+		if(MyContext.getData().getTransaction().commit(router))
+			MyContext.getData().newTransaction(this);
 	}
 	
+	@Override
 	public void rollback() {
 		MyContext.getData().getTransaction().revert();	//revert all changes in the model
 		MyContext.getData().newTransaction(this);
 	}
 	
+	@Override
 	public void close() {
 		
 	}

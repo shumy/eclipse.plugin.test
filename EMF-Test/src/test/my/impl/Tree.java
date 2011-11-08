@@ -1,4 +1,4 @@
-package test.my;
+package test.my.impl;
 
 import java.util.Collections;
 import java.util.HashMap;

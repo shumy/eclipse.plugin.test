@@ -1,4 +1,5 @@
-package test.my.repository;
+package test.my.spi.context;
+
 
 
 public class MyContext {

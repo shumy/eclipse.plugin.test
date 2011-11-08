@@ -1,14 +1,17 @@
-package test.my.repository;
+package test.my.impl.transaction;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Stack;
-import java.util.UUID;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
 import test.domain.Entity;
-import test.my.repository.MyTransactionData.AddRemoveReport;
+import test.my.impl.repository.MySession;
+import test.my.impl.transaction.MyTransactionData.AddRemoveReport;
+import test.my.spi.IRouter;
 
 public class MyTransaction {
 	
@@ -46,23 +49,53 @@ public class MyTransaction {
 	}
 	
 	private final MySession session;
-	private final String txId = UUID.randomUUID().toString();
 	
 	private final Stack<Change> changeStack = new Stack<Change>();
 	private final MyTransactionData changeResume = new MyTransactionData();
 	
-	MyTransaction(MySession session) {
+	//<client-id> <entity>
+	private final HashMap<String, Entity> newEntities = new HashMap<String, Entity>();
+	
+	//<server-id> <entity>
+	private final HashMap<String, Entity> entities = new HashMap<String, Entity>();
+	
+	//--------------------------------------------------------------------------------------------------------------------------------
+	public MyTransaction(MySession session) {
 		this.session = session;
 	}
 	
+	public MyTransactionData getChangeResume() {return changeResume;}
 	
-	String getId() {return txId;}
+	public boolean commit(IRouter router) {
+		MyTransactionResponse txResponse = router.commit(changeResume);
+		
+		//update tmp-id's with values from server...
+		Map<String, String> idMap = txResponse.getIdMap();
+		for(String tmpId: idMap.keySet()) {
+			Entity tmpEntity = newEntities.get(tmpId);
+			if(tmpEntity != null) {
+				tmpEntity.eSetDeliver(false);
+				tmpEntity.setId(idMap.get(tmpId));
+				tmpEntity.eSetDeliver(true);
+				
+				entities.put(tmpEntity.getId(), tmpEntity);
+			}
+				
+		}
+		
+		//TODO: update entity fields with data from server...
+		
+		return true;
+	}
 	
 	@SuppressWarnings("unchecked")
-	void newEntity(Entity entity) {
+	public void newEntity(Entity entity) {
+		newEntities.put(entity.getId(), entity);
 		changeResume.newEntity(entity.getId());
 		
 		for(EStructuralFeature feature: entity.eClass().getEAllStructuralFeatures()) {
+			if(feature.isTransient()) continue;
+			
 			if(feature.isMany()) { //is a reference
 				EList<Object> values = ((EList<Object>)entity.eGet(feature));
 				for(Object newValue: values) {
@@ -78,13 +111,14 @@ public class MyTransaction {
 		}
 	}
 	
-	void deleteEntity(Entity entity) {
+	public void deleteEntity(Entity entity) {
+		newEntities.remove(entity.getId());
 		changeResume.deleteEntity(entity.getId());
 	}
 	
-	void addChange(Entity entity, EStructuralFeature feature, int type, Object oldValue, Object newValue, int listIndex) {
+	public void addChange(Entity entity, EStructuralFeature feature, int type, Object oldValue, Object newValue, int listIndex) {
+		if(feature.isTransient()) return;
 		
-		AddRemoveReport arReport = null;
 		switch (type) {
 			case Notification.SET:
 				if(newValue == null)
@@ -98,21 +132,20 @@ public class MyTransaction {
 				break;
 				
 			case Notification.ADD:
-				arReport = changeResume.getOrCreateReport(entity.getId(), feature.getName());
+				AddRemoveReport arReport1 = changeResume.getOrCreateReport(entity.getId(), feature.getName());
 				
 				Entity refEntity1 = ((Entity)newValue);
-				session.persist(refEntity1);
+				session.persist(refEntity1);	//always cascade persist for safe (maybe the entity is new one!)
 				
-				arReport.reportAdd(refEntity1.getId());
+				arReport1.reportAdd(refEntity1.getId());
 				break;
 				
 			case Notification.REMOVE:
-				arReport = changeResume.getOrCreateReport(entity.getId(), feature.getName());
+				AddRemoveReport arReport2 = changeResume.getOrCreateReport(entity.getId(), feature.getName());
 				
 				Entity refEntity2 = ((Entity)oldValue);
-				session.persist(refEntity2);
 				
-				arReport.reportRemove(refEntity2.getId());
+				arReport2.reportRemove(refEntity2.getId());
 				break;
 		}
 		
@@ -120,7 +153,7 @@ public class MyTransaction {
 	}
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	void revert() {
+	public void revert() {
 		while(!changeStack.isEmpty()) {
 			Change ch = changeStack.pop();
 			
@@ -142,6 +175,5 @@ public class MyTransaction {
 			ch.entity.eSetDeliver(true);
 		}
 	}
-	
-	MyTransactionData getChangeResume() {return changeResume;}
+
 }

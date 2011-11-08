@@ -1,20 +1,17 @@
-package test.my;
+package test.my.test;
 
 import test.domain.Address;
 import test.domain.DomainFactory;
 import test.domain.User;
-import test.my.repository.MySession;
+import test.my.ISession;
+import test.my.MyServer;
 
 public class MyTest {
-
-	public static MySession openSession(String repoName) {
-		return new MySession();
-	}
 	
 	public static void main(String[] args) {
 		DomainFactory dFactory = DomainFactory.eINSTANCE;
 		
-		MySession session = openSession("demo");
+		ISession session = MyServer.INSTANCE.newSession();
 		try {
 
 				User user = dFactory.createUser();
@@ -22,8 +19,10 @@ public class MyTest {
 				user.setPass("password");
 				
 				session.persist(user);
+				System.out.println(user.getId());
 			session.commit();
-				
+				System.out.println(user.getId());
+			
 				Address address1 = dFactory.createAddress();
 				address1.setLocal("Aveiro");
 				

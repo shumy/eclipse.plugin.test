@@ -1,9 +1,10 @@
-package test.my.repository;
+package test.my.impl.transaction;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
-import test.my.Tree;
+import test.my.impl.Tree;
 
 public class MyTransactionData {
 	
@@ -14,19 +15,21 @@ public class MyTransactionData {
 		//<entity-id>
 		private final Set<String> removeEntities = new HashSet<String>();
 		
-		public void reportAdd(String id) {
+		public Set<String> getAddEntities() {return addEntities;}
+		public Set<String> getRemoveEntities() {return removeEntities;}
+		
+		void reportAdd(String id) {
 			removeEntities.remove(id);
 			addEntities.add(id);
 		}
 		
-		public void reportRemove(String id) {
+		void reportRemove(String id) {
 			addEntities.remove(id);
 			removeEntities.add(id);
 		}
-		
-		public Set<String> getAddEntities() {return addEntities;}
-		public Set<String> getRemoveEntities() {return removeEntities;}
 	}
+	
+	private final String txId = UUID.randomUUID().toString();
 	
 	//<entity-id>
 	private final Set<String> newEntities = new HashSet<String>();
@@ -38,15 +41,23 @@ public class MyTransactionData {
 	private final Tree<String, String, Object> properties = new Tree<String, String, Object>();
 	
 	//<entity-id> <property-name> <add-remove-report>
-	private final Tree<String, String, AddRemoveReport> references = new Tree<String, String, MyTransactionData.AddRemoveReport>();
+	private final Tree<String, String, AddRemoveReport> references = new Tree<String, String, AddRemoveReport>();
 	
 	
-	public void newEntity(String id) {
+	public String getId() {return txId;}
+	
+	public Set<String> getNewEntities() {return newEntities;}
+	public Set<String> getDeleteEntities() {return deleteEntities;}
+	
+	public Tree<String, String, Object> getProperties() {return properties;}
+	public Tree<String, String, AddRemoveReport> getReferences() {return references;}
+	
+	void newEntity(String id) {
 		deleteEntities.remove(id);
 		newEntities.add(id);
 	}
 	
-	public void deleteEntity(String id) {
+	void deleteEntity(String id) {
 		//delete all change history:
 		properties.remove(id);
 		references.remove(id);
@@ -57,15 +68,15 @@ public class MyTransactionData {
 			deleteEntities.add(id);
 	}
 	
-	public void addProperty(String entityId, String propName, Object value) {
+	void addProperty(String entityId, String propName, Object value) {
 		properties.add(entityId, propName, value);
 	}
 	
-	public void removeProperty(String entityId, String propName) {
+	void removeProperty(String entityId, String propName) {
 		properties.remove(entityId, propName);
 	}
 	
-	public AddRemoveReport getOrCreateReport(String entityId, String propName) {
+	AddRemoveReport getOrCreateReport(String entityId, String propName) {
 		AddRemoveReport arReport = references.get(entityId, propName);
 		if(arReport == null) {
 			arReport = new AddRemoveReport();
