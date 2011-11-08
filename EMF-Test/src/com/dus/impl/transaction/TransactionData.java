@@ -1,21 +1,26 @@
-package test.my.impl.transaction;
+package com.dus.impl.transaction;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.UUID;
 
-import test.my.impl.Tree;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 
-public class MyTransactionData {
+import com.dus.spi.Tree;
+import com.dus.spi.transaction.ITransactionRequest;
+
+public class TransactionData implements ITransactionRequest {
 	
-	public static class AddRemoveReport {
+	public static class AddRemoveReport implements ITransactionRequest.IAddRemoveReport {
 		//<entity-id>
 		private final Set<String> addEntities = new HashSet<String>();
 		
 		//<entity-id>
 		private final Set<String> removeEntities = new HashSet<String>();
 		
+		@Override
 		public Set<String> getAddEntities() {return addEntities;}
+		
+		@Override
 		public Set<String> getRemoveEntities() {return removeEntities;}
 		
 		void reportAdd(String id) {
@@ -29,7 +34,7 @@ public class MyTransactionData {
 		}
 	}
 	
-	private final String txId = UUID.randomUUID().toString();
+	private final String txId = EcoreUtil.generateUUID();
 	
 	//<entity-id>
 	private final Set<String> newEntities = new HashSet<String>();
@@ -41,16 +46,22 @@ public class MyTransactionData {
 	private final Tree<String, String, Object> properties = new Tree<String, String, Object>();
 	
 	//<entity-id> <property-name> <add-remove-report>
-	private final Tree<String, String, AddRemoveReport> references = new Tree<String, String, AddRemoveReport>();
+	private final Tree<String, String, IAddRemoveReport> references = new Tree<String, String, IAddRemoveReport>();
 	
-	
+	@Override
 	public String getId() {return txId;}
 	
+	@Override
 	public Set<String> getNewEntities() {return newEntities;}
+	
+	@Override
 	public Set<String> getDeleteEntities() {return deleteEntities;}
 	
+	@Override
 	public Tree<String, String, Object> getProperties() {return properties;}
-	public Tree<String, String, AddRemoveReport> getReferences() {return references;}
+	
+	@Override
+	public Tree<String, String, IAddRemoveReport> getReferences() {return references;}
 	
 	void newEntity(String id) {
 		deleteEntities.remove(id);
@@ -69,7 +80,10 @@ public class MyTransactionData {
 	}
 	
 	void addProperty(String entityId, String propName, Object value) {
-		properties.add(entityId, propName, value);
+		if(value != null)
+			properties.add(entityId, propName, value);
+		else
+			properties.remove(entityId, propName);
 	}
 	
 	void removeProperty(String entityId, String propName) {
@@ -77,7 +91,7 @@ public class MyTransactionData {
 	}
 	
 	AddRemoveReport getOrCreateReport(String entityId, String propName) {
-		AddRemoveReport arReport = references.get(entityId, propName);
+		AddRemoveReport arReport = (AddRemoveReport) references.get(entityId, propName);
 		if(arReport == null) {
 			arReport = new AddRemoveReport();
 			references.add(entityId, propName, arReport);
@@ -133,7 +147,7 @@ public class MyTransactionData {
 			for(String ref: references.keySetLevel2(id)) {
 				sb.append(ref);
 				sb.append("=(add=[");
-				AddRemoveReport arReport = references.get(id, ref);
+				IAddRemoveReport arReport = references.get(id, ref);
 				if(!arReport.getAddEntities().isEmpty()) {
 					for(String idToAdd: arReport.getAddEntities()) {
 						sb.append(idToAdd);

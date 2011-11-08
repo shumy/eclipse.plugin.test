@@ -1,4 +1,4 @@
-package test.my.impl.transaction;
+package com.dus.impl.transaction;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -8,12 +8,15 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
-import test.domain.Entity;
-import test.my.impl.repository.MySession;
-import test.my.impl.transaction.MyTransactionData.AddRemoveReport;
-import test.my.spi.IRouter;
+import com.dus.ISession;
+import com.dus.impl.Session;
+import com.dus.impl.transaction.TransactionData.AddRemoveReport;
+import com.dus.spi.router.ITransactionRouter;
+import com.dus.spi.transaction.ITransactionResponse;
 
-public class MyTransaction {
+import test.domain.Entity;
+
+public class Transaction {
 	
 	public static class Change {
 		public final int type;
@@ -48,10 +51,10 @@ public class MyTransaction {
 		}
 	}
 	
-	private final MySession session;
+	private final Session session;
 	
 	private final Stack<Change> changeStack = new Stack<Change>();
-	private final MyTransactionData changeResume = new MyTransactionData();
+	private final TransactionData changeResume = new TransactionData();
 	
 	//<client-id> <entity>
 	private final HashMap<String, Entity> newEntities = new HashMap<String, Entity>();
@@ -60,14 +63,14 @@ public class MyTransaction {
 	private final HashMap<String, Entity> entities = new HashMap<String, Entity>();
 	
 	//--------------------------------------------------------------------------------------------------------------------------------
-	public MyTransaction(MySession session) {
-		this.session = session;
+	public Transaction(ISession session) {
+		this.session = (Session) session;
 	}
 	
-	public MyTransactionData getChangeResume() {return changeResume;}
+	public TransactionData getChangeResume() {return changeResume;}
 	
-	public boolean commit(IRouter router) {
-		MyTransactionResponse txResponse = router.commit(changeResume);
+	public boolean commit(ITransactionRouter router) {
+		ITransactionResponse txResponse = router.commit(changeResume);
 		
 		//update tmp-id's with values from server...
 		Map<String, String> idMap = txResponse.getIdMap();
@@ -98,15 +101,11 @@ public class MyTransaction {
 			
 			if(feature.isMany()) { //is a reference
 				EList<Object> values = ((EList<Object>)entity.eGet(feature));
-				for(Object newValue: values) {
-					AddRemoveReport arReport = changeResume.getOrCreateReport(entity.getId(), feature.getName());
-					arReport.reportAdd(((Entity)newValue).getId());
-				}
+				for(Object newValue: values)
+					addReport(entity, feature, newValue);
 				
 			} else if(!feature.getName().equals("id")) {
-				Object newValue = entity.eGet(feature);
-				if(newValue != null)
-					changeResume.addProperty(entity.getId(), feature.getName(), newValue);
+				changeResume.addProperty(entity.getId(), feature.getName(), entity.eGet(feature));
 			}
 		}
 	}
@@ -121,10 +120,7 @@ public class MyTransaction {
 		
 		switch (type) {
 			case Notification.SET:
-				if(newValue == null)
-					changeResume.removeProperty(entity.getId(), feature.getName());
-				else
-					changeResume.addProperty(entity.getId(), feature.getName(), newValue);
+				changeResume.addProperty(entity.getId(), feature.getName(), newValue);
 				break;
 			
 			case Notification.UNSET:
@@ -132,20 +128,11 @@ public class MyTransaction {
 				break;
 				
 			case Notification.ADD:
-				AddRemoveReport arReport1 = changeResume.getOrCreateReport(entity.getId(), feature.getName());
-				
-				Entity refEntity1 = ((Entity)newValue);
-				session.persist(refEntity1);	//always cascade persist for safe (maybe the entity is new one!)
-				
-				arReport1.reportAdd(refEntity1.getId());
+				addReport(entity, feature, newValue);
 				break;
 				
 			case Notification.REMOVE:
-				AddRemoveReport arReport2 = changeResume.getOrCreateReport(entity.getId(), feature.getName());
-				
-				Entity refEntity2 = ((Entity)oldValue);
-				
-				arReport2.reportRemove(refEntity2.getId());
+				removeReport(entity, feature, oldValue);
 				break;
 		}
 		
@@ -176,4 +163,20 @@ public class MyTransaction {
 		}
 	}
 
+	private void addReport(Entity entity, EStructuralFeature feature, Object value) {
+		AddRemoveReport arReport = changeResume.getOrCreateReport(entity.getId(), feature.getName());
+		
+		Entity refEntity = ((Entity)value);
+		session.persist(refEntity);	//always cascade persist for safe (maybe the entity is a new one!)
+		
+		arReport.reportAdd(refEntity.getId());
+	}
+	
+	private void removeReport(Entity entity, EStructuralFeature feature, Object value) {
+		AddRemoveReport arReport = changeResume.getOrCreateReport(entity.getId(), feature.getName());
+		
+		Entity refEntity = ((Entity)value);
+		
+		arReport.reportRemove(refEntity.getId());
+	}
 }

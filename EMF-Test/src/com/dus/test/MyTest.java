@@ -1,27 +1,31 @@
-package test.my.test;
+package com.dus.test;
+
+import java.util.List;
+
+import com.dus.IRepository;
+import com.dus.ISession;
+import com.dus.Dus;
+import com.dus.query.IQuery;
+import com.dus.query.IQueryByFilter;
 
 import test.domain.Address;
 import test.domain.DomainFactory;
+import test.domain.DomainPackage;
 import test.domain.User;
-import test.my.ISession;
-import test.my.MyServer;
 
 public class MyTest {
 	
 	public static void main(String[] args) {
 		DomainFactory dFactory = DomainFactory.eINSTANCE;
 		
-		ISession session = MyServer.INSTANCE.newSession();
+		ISession session = Dus.INSTANCE.newSession();
 		try {
-
 				User user = dFactory.createUser();
 				user.setName("Micael");
 				user.setPass("password");
 				
 				session.persist(user);
-				System.out.println(user.getId());
 			session.commit();
-				System.out.println(user.getId());
 			
 				Address address1 = dFactory.createAddress();
 				address1.setLocal("Aveiro");
@@ -59,6 +63,15 @@ public class MyTest {
 				user.setPass("new pass");
 				session.delete(user);
 			session.commit();
+			
+			IRepository domainRepo = session.getRepository(DomainPackage.eINSTANCE);
+			User xUser = domainRepo.findById(User.class, "xxx");
+			System.out.println(xUser);
+			
+			//IQueryByFilter<User> filter = domainRepo.qByFilter(User.class, "name = :name");
+			//filter.setParameter("name", "Micael");
+			
+			//List<User> results = filter.execute();
 			
 		} finally {
 			session.close();

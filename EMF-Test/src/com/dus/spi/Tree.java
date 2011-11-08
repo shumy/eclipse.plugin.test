@@ -1,4 +1,4 @@
-package test.my.impl;
+package com.dus.spi;
 
 import java.util.Collections;
 import java.util.HashMap;
