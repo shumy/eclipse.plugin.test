@@ -7,5 +7,7 @@ public class ContextData {
 	private Transaction tx;
 	
 	public Transaction getTransaction() {return tx;}
-	public void newTransaction(ISession session) {this.tx = new Transaction(session);}
+	public void newTransaction(ISession session) {
+		this.tx = new Transaction(session);
+	}
 }

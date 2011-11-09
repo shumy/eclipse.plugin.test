@@ -1,74 +1,77 @@
 package com.dus.impl.transaction;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.util.EcoreUtil;
 
+import com.dus.spi.EntityID;
+import com.dus.spi.ITree;
 import com.dus.spi.Tree;
 import com.dus.spi.transaction.ITransactionRequest;
 
-public class TransactionData implements ITransactionRequest {
+public final class TransactionData implements ITransactionRequest {
 	
 	public static class AddRemoveReport implements ITransactionRequest.IAddRemoveReport {
 		//<entity-id>
-		private final Set<String> addEntities = new HashSet<String>();
+		private final Set<EntityID> addEntities = new HashSet<EntityID>();
 		
 		//<entity-id>
-		private final Set<String> removeEntities = new HashSet<String>();
+		private final Set<EntityID> removeEntities = new HashSet<EntityID>();
 		
 		@Override
-		public Set<String> getAddEntities() {return addEntities;}
+		public Set<EntityID> getAddEntities() {return Collections.unmodifiableSet(addEntities);}
 		
 		@Override
-		public Set<String> getRemoveEntities() {return removeEntities;}
+		public Set<EntityID> getRemoveEntities() {return Collections.unmodifiableSet(removeEntities);}
 		
-		void reportAdd(String id) {
+		void reportAdd(EntityID id) {
 			removeEntities.remove(id);
 			addEntities.add(id);
 		}
 		
-		void reportRemove(String id) {
+		void reportRemove(EntityID id) {
 			addEntities.remove(id);
 			removeEntities.add(id);
 		}
 	}
 	
-	private final String txId = EcoreUtil.generateUUID();
+	private final String id = EcoreUtil.generateUUID();
 	
 	//<entity-id>
-	private final Set<String> newEntities = new HashSet<String>();
+	private final Set<EntityID> newEntities = new HashSet<EntityID>();
 	
 	//<entity-id>
-	private final Set<String> deleteEntities = new HashSet<String>();
+	private final Set<EntityID> deleteEntities = new HashSet<EntityID>();
 	
 	//<entity-id> <property-name> <supported-value>
-	private final Tree<String, String, Object> properties = new Tree<String, String, Object>();
+	private final Tree<EntityID, String, Object> properties = new Tree<EntityID, String, Object>();
 	
 	//<entity-id> <property-name> <add-remove-report>
-	private final Tree<String, String, IAddRemoveReport> references = new Tree<String, String, IAddRemoveReport>();
+	private final Tree<EntityID, String, IAddRemoveReport> references = new Tree<EntityID, String, IAddRemoveReport>();
 	
 	@Override
-	public String getId() {return txId;}
+	public String getId() {return id;}
 	
 	@Override
-	public Set<String> getNewEntities() {return newEntities;}
+	public Set<EntityID> getNewEntities() {return Collections.unmodifiableSet(newEntities);}
 	
 	@Override
-	public Set<String> getDeleteEntities() {return deleteEntities;}
+	public Set<EntityID> getDeleteEntities() {return Collections.unmodifiableSet(deleteEntities);}
 	
 	@Override
-	public Tree<String, String, Object> getProperties() {return properties;}
+	public ITree<EntityID, String, Object> getProperties() {return properties;}
 	
 	@Override
-	public Tree<String, String, IAddRemoveReport> getReferences() {return references;}
+	public ITree<EntityID, String, IAddRemoveReport> getReferences() {return references;}
 	
-	void newEntity(String id) {
+	void newEntity(EntityID id) {
 		deleteEntities.remove(id);
 		newEntities.add(id);
 	}
 	
-	void deleteEntity(String id) {
+	void deleteEntity(EntityID id) {
 		//delete all change history:
 		properties.remove(id);
 		references.remove(id);
@@ -79,18 +82,18 @@ public class TransactionData implements ITransactionRequest {
 			deleteEntities.add(id);
 	}
 	
-	void addProperty(String entityId, String propName, Object value) {
+	void addProperty(EntityID entityId, String propName, Object value) {
 		if(value != null)
 			properties.add(entityId, propName, value);
 		else
 			properties.remove(entityId, propName);
 	}
 	
-	void removeProperty(String entityId, String propName) {
+	void removeProperty(EntityID entityId, String propName) {
 		properties.remove(entityId, propName);
 	}
 	
-	AddRemoveReport getOrCreateReport(String entityId, String propName) {
+	AddRemoveReport getOrCreateReport(EntityID entityId, String propName) {
 		AddRemoveReport arReport = (AddRemoveReport) references.get(entityId, propName);
 		if(arReport == null) {
 			arReport = new AddRemoveReport();
@@ -104,7 +107,7 @@ public class TransactionData implements ITransactionRequest {
 		StringBuilder sb = new StringBuilder();
 		sb.append("DELETE ENTITIES: {");
 		if(!deleteEntities.isEmpty()) {
-			for(String id: deleteEntities) {
+			for(EntityID id: deleteEntities) {
 				sb.append(id);
 				sb.append(", ");
 			}
@@ -114,7 +117,7 @@ public class TransactionData implements ITransactionRequest {
 		
 		sb.append("NEW ENTITIES: {");
 		if(!newEntities.isEmpty()) {
-			for(String id: newEntities) {
+			for(EntityID id: newEntities) {
 				sb.append(id);
 				sb.append(", ");
 			}
@@ -123,7 +126,7 @@ public class TransactionData implements ITransactionRequest {
 		sb.append("}\n");
 		
 		sb.append("PROPERTIES: \n");
-		for(String id: properties.keySetLevel1()) {
+		for(EntityID id: properties.keySetLevel1()) {
 			sb.append("  ENTITY "); 
 			sb.append(id);
 			sb.append(": {");
@@ -140,7 +143,7 @@ public class TransactionData implements ITransactionRequest {
 		}
 		
 		sb.append("REFERENCES: \n");
-		for(String id: references.keySetLevel1()) {
+		for(EntityID id: references.keySetLevel1()) {
 			sb.append("  ENTITY "); 
 			sb.append(id);
 			sb.append(": {");
@@ -149,7 +152,7 @@ public class TransactionData implements ITransactionRequest {
 				sb.append("=(add=[");
 				IAddRemoveReport arReport = references.get(id, ref);
 				if(!arReport.getAddEntities().isEmpty()) {
-					for(String idToAdd: arReport.getAddEntities()) {
+					for(EntityID idToAdd: arReport.getAddEntities()) {
 						sb.append(idToAdd);
 						sb.append(", ");
 					}
@@ -157,7 +160,7 @@ public class TransactionData implements ITransactionRequest {
 				}
 				sb.append("], remove=[");
 				if(!arReport.getRemoveEntities().isEmpty()) {
-					for(String idToRemove: arReport.getRemoveEntities()) {
+					for(EntityID idToRemove: arReport.getRemoveEntities()) {
 						sb.append(idToRemove);
 						sb.append(", ");
 					}

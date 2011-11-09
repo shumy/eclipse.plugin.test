@@ -6,7 +6,6 @@ import com.dus.IRepository;
 import com.dus.ISession;
 import com.dus.Dus;
 import com.dus.query.IQuery;
-import com.dus.query.IQueryByFilter;
 
 import test.domain.Address;
 import test.domain.DomainFactory;
@@ -17,6 +16,7 @@ public class MyTest {
 	
 	public static void main(String[] args) {
 		DomainFactory dFactory = DomainFactory.eINSTANCE;
+		//DomainPackage dPackage = DomainPackage.eINSTANCE;
 		
 		ISession session = Dus.INSTANCE.newSession();
 		try {
@@ -68,10 +68,21 @@ public class MyTest {
 			User xUser = domainRepo.findById(User.class, "xxx");
 			System.out.println(xUser);
 			
-			//IQueryByFilter<User> filter = domainRepo.qByFilter(User.class, "name = :name");
-			//filter.setParameter("name", "Micael");
+			IQuery<User> filter = domainRepo.qByFilter(User.class, "name = :name");
+			filter.setParameter("name", "Micael");
+			List<User> results = filter.execute();
 			
-			//List<User> results = filter.execute();
+			System.out.println("RESULTS:");
+			for(User rUser: results) {
+				System.out.println("  USER: " + rUser);
+				System.out.print("    ADDRESS: {");
+				for(Address add: rUser.getAddresses()) {
+					System.out.print("[" + add.getId() + ", " + add.getLocal() + "]");
+					System.out.print(", ");
+				}
+				System.out.println("}");
+				
+			}
 			
 		} finally {
 			session.close();

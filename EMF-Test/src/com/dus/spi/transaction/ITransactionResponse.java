@@ -2,8 +2,10 @@ package com.dus.spi.transaction;
 
 import java.util.Map;
 
+import com.dus.spi.EntityID;
+
 public interface ITransactionResponse {
 	String getId();
 	
-	Map<String, String> getIdMap();
+	Map<EntityID, EntityID> getIdMap();
 }

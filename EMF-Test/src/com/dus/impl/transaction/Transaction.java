@@ -11,7 +11,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import com.dus.ISession;
 import com.dus.impl.Session;
 import com.dus.impl.transaction.TransactionData.AddRemoveReport;
-import com.dus.spi.router.ITransactionRouter;
+import com.dus.spi.EntityID;
 import com.dus.spi.transaction.ITransactionResponse;
 
 import test.domain.Entity;
@@ -57,10 +57,10 @@ public class Transaction {
 	private final TransactionData changeResume = new TransactionData();
 	
 	//<client-id> <entity>
-	private final HashMap<String, Entity> newEntities = new HashMap<String, Entity>();
+	private final HashMap<EntityID, Entity> newEntities = new HashMap<EntityID, Entity>();
 	
 	//<server-id> <entity>
-	private final HashMap<String, Entity> entities = new HashMap<String, Entity>();
+	private final HashMap<EntityID, Entity> entities = new HashMap<EntityID, Entity>();
 	
 	//--------------------------------------------------------------------------------------------------------------------------------
 	public Transaction(ISession session) {
@@ -69,19 +69,19 @@ public class Transaction {
 	
 	public TransactionData getChangeResume() {return changeResume;}
 	
-	public boolean commit(ITransactionRouter router) {
-		ITransactionResponse txResponse = router.commit(changeResume);
+	public boolean commit() {
+		ITransactionResponse txResponse = session.getTransactionRouter().commit(changeResume);
 		
 		//update tmp-id's with values from server...
-		Map<String, String> idMap = txResponse.getIdMap();
-		for(String tmpId: idMap.keySet()) {
+		Map<EntityID, EntityID> idMap = txResponse.getIdMap();
+		for(EntityID tmpId: idMap.keySet()) {
 			Entity tmpEntity = newEntities.get(tmpId);
 			if(tmpEntity != null) {
-				tmpEntity.eSetDeliver(false);
-				tmpEntity.setId(idMap.get(tmpId));
-				tmpEntity.eSetDeliver(true);
+				session.deactivateAdapter(tmpEntity);
+				tmpEntity.setId(idMap.get(tmpId).typeId);
+				session.activateAdapter(tmpEntity);
 				
-				entities.put(tmpEntity.getId(), tmpEntity);
+				entities.put(idMap.get(tmpId), tmpEntity);
 			}
 				
 		}
@@ -93,8 +93,10 @@ public class Transaction {
 	
 	@SuppressWarnings("unchecked")
 	public void newEntity(Entity entity) {
-		newEntities.put(entity.getId(), entity);
-		changeResume.newEntity(entity.getId());
+		EntityID entityId = new EntityID(entity.eClass(), entity.getId());
+		
+		newEntities.put(entityId, entity);
+		changeResume.newEntity(entityId);
 		
 		for(EStructuralFeature feature: entity.eClass().getEAllStructuralFeatures()) {
 			if(feature.isTransient()) continue;
@@ -105,26 +107,29 @@ public class Transaction {
 					addReport(entity, feature, newValue);
 				
 			} else if(!feature.getName().equals("id")) {
-				changeResume.addProperty(entity.getId(), feature.getName(), entity.eGet(feature));
+				changeResume.addProperty(entityId, feature.getName(), entity.eGet(feature));
 			}
 		}
 	}
 	
 	public void deleteEntity(Entity entity) {
-		newEntities.remove(entity.getId());
-		changeResume.deleteEntity(entity.getId());
+		EntityID entityId = new EntityID(entity.eClass(), entity.getId());
+		
+		newEntities.remove(entityId);
+		changeResume.deleteEntity(entityId);
 	}
 	
 	public void addChange(Entity entity, EStructuralFeature feature, int type, Object oldValue, Object newValue, int listIndex) {
 		if(feature.isTransient()) return;
+		EntityID entityId = new EntityID(entity.eClass(), entity.getId());
 		
 		switch (type) {
 			case Notification.SET:
-				changeResume.addProperty(entity.getId(), feature.getName(), newValue);
+				changeResume.addProperty(entityId, feature.getName(), newValue);
 				break;
 			
 			case Notification.UNSET:
-				changeResume.removeProperty(entity.getId(), feature.getName());
+				changeResume.removeProperty(entityId, feature.getName());
 				break;
 				
 			case Notification.ADD:
@@ -144,7 +149,7 @@ public class Transaction {
 		while(!changeStack.isEmpty()) {
 			Change ch = changeStack.pop();
 			
-			ch.entity.eSetDeliver(false);
+			session.deactivateAdapter(ch.entity);
 			switch (ch.type) {
 				case Notification.SET:
 				case Notification.UNSET:
@@ -159,24 +164,31 @@ public class Transaction {
 					((EList)ch.entity.eGet(ch.feature)).add(ch.listIndex, ch.oldValue);
 					break;
 			}
-			ch.entity.eSetDeliver(true);
+			session.activateAdapter(ch.entity);
 		}
 	}
 
 	private void addReport(Entity entity, EStructuralFeature feature, Object value) {
-		AddRemoveReport arReport = changeResume.getOrCreateReport(entity.getId(), feature.getName());
+		EntityID entityId = new EntityID(entity.eClass(), entity.getId());
+		
+		AddRemoveReport arReport = changeResume.getOrCreateReport(entityId, feature.getName());
 		
 		Entity refEntity = ((Entity)value);
 		session.persist(refEntity);	//always cascade persist for safe (maybe the entity is a new one!)
 		
-		arReport.reportAdd(refEntity.getId());
+		EntityID refEntityId = new EntityID(refEntity.eClass(), refEntity.getId());
+		
+		arReport.reportAdd(refEntityId);
 	}
 	
 	private void removeReport(Entity entity, EStructuralFeature feature, Object value) {
-		AddRemoveReport arReport = changeResume.getOrCreateReport(entity.getId(), feature.getName());
+		EntityID entityId = new EntityID(entity.eClass(), entity.getId());
+		
+		AddRemoveReport arReport = changeResume.getOrCreateReport(entityId, feature.getName());
 		
 		Entity refEntity = ((Entity)value);
+		EntityID refEntityId = new EntityID(refEntity.eClass(), refEntity.getId());
 		
-		arReport.reportRemove(refEntity.getId());
+		arReport.reportRemove(refEntityId);
 	}
 }

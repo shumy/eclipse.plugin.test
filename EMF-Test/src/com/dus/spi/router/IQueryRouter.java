@@ -1,8 +1,11 @@
 package com.dus.spi.router;
 
+import com.dus.spi.query.IQueryRequest;
+import com.dus.spi.query.IQueryResponse;
+
 public interface IQueryRouter {
 	
-	//TODO: support for query protocols
+	IQueryResponse execute(IQueryRequest qRequest);
 	
 	//TODO: support for lazy loading
 }

@@ -2,19 +2,20 @@ package com.dus.spi.transaction;
 
 import java.util.Set;
 
-import com.dus.spi.Tree;
+import com.dus.spi.EntityID;
+import com.dus.spi.ITree;
 
 public interface ITransactionRequest {
 	interface IAddRemoveReport {
-		Set<String> getAddEntities();
-		Set<String> getRemoveEntities();
+		Set<EntityID> getAddEntities();
+		Set<EntityID> getRemoveEntities();
 	}
 	
 	String getId();
 	
-	Set<String> getNewEntities();
-	Set<String> getDeleteEntities();
+	Set<EntityID> getNewEntities();
+	Set<EntityID> getDeleteEntities();
 	
-	Tree<String, String, Object> getProperties();
-	Tree<String, String, IAddRemoveReport> getReferences();
+	ITree<EntityID, String, Object> getProperties();
+	ITree<EntityID, String, IAddRemoveReport> getReferences();
 }

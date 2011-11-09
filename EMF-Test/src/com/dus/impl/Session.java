@@ -10,6 +10,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import com.dus.IRepository;
 import com.dus.ISession;
 import com.dus.spi.context.Context;
+import com.dus.spi.router.IQueryRouter;
 import com.dus.spi.router.ITransactionRouter;
 
 import test.domain.Entity;
@@ -34,21 +35,31 @@ public class Session implements ISession {
 		}
 	};
 	
-	private final ITransactionRouter router;
+	private final ITransactionRouter tRouter;
+	private final IQueryRouter qRouter;
 	
-	public Session(ITransactionRouter router) {
-		this.router = router;
+	public Session(ITransactionRouter tRouter, IQueryRouter qRouter) {
+		this.tRouter = tRouter;
+		this.qRouter = qRouter;
 		Context.getData().newTransaction(this);
 	}
 	
-	void setupAdapter(Entity entity) {
+	public void activateAdapter(Entity entity) {
 		entity.eAdapters().add(eAdapter);
 	}
+	
+	public void deactivateAdapter(Entity entity) {
+		entity.eAdapters().remove(eAdapter);
+	}
+	
+	public ITransactionRouter getTransactionRouter() {return tRouter;}
+	
+	public IQueryRouter getQueryRouter() {return qRouter;}
 	
 	@Override
 	public void persist(Entity entity) {
 		if(entity.getId() == null) {
-			entity.setId("tmp" + EcoreUtil.generateUUID());
+			entity.setId("TMP" + EcoreUtil.generateUUID());
 			entity.eAdapters().add(eAdapter);
 			Context.getData().getTransaction().newEntity(entity);
 		} else if(!entity.eAdapters().contains(eAdapter)) { //ID not null, but contains adapter!!! ID was changed manually!
@@ -67,7 +78,7 @@ public class Session implements ISession {
 	
 	@Override
 	public void commit() {
-		if(Context.getData().getTransaction().commit(router))
+		if(Context.getData().getTransaction().commit())
 			Context.getData().newTransaction(this);
 	}
 	

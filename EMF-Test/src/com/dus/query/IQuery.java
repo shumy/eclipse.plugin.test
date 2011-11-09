@@ -1,9 +1,8 @@
 package com.dus.query;
 
-import java.util.List;
+import test.domain.Entity;
 
-import org.eclipse.emf.ecore.EObject;
-
-public interface IQuery<T extends EObject> {
-	List<T> execute();
+public interface IQuery<T extends Entity> extends IQueryLoader<T> {
+	void setParameter(String name, Object value);
+	void setParameter(int index, Object value);
 }
