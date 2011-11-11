@@ -13,8 +13,8 @@ public class TransactionDummyRouter implements ITransactionRouter {
 	
 	@Override
 	public ITransactionResponse commit(ITransactionRequest txRequest) {
-		System.out.println("COMMIT: ");
-		System.out.println(txRequest);
+		//System.out.println("COMMIT: ");
+		//System.out.println(txRequest);
 		
 		Map<EntityID, EntityID> idMap = new HashMap<EntityID, EntityID>();
 		for(EntityID id: txRequest.getNewEntities()) {

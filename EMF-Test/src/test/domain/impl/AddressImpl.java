@@ -41,16 +41,6 @@ public class AddressImpl extends EntityImpl implements Address {
 	protected static final String LOCAL_EDEFAULT = null;
 
 	/**
-	 * The cached value of the '{@link #getLocal() <em>Local</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getLocal()
-	 * @generated
-	 * @ordered
-	 */
-	protected String local = LOCAL_EDEFAULT;
-
-	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -75,7 +65,7 @@ public class AddressImpl extends EntityImpl implements Address {
 	 * @generated
 	 */
 	public String getLocal() {
-		return local;
+		return (String)eDynamicGet(DomainPackage.ADDRESS__LOCAL, DomainPackage.Literals.ADDRESS__LOCAL, true, true);
 	}
 
 	/**
@@ -84,10 +74,7 @@ public class AddressImpl extends EntityImpl implements Address {
 	 * @generated
 	 */
 	public void setLocal(String newLocal) {
-		String oldLocal = local;
-		local = newLocal;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, DomainPackage.ADDRESS__LOCAL, oldLocal, local));
+		eDynamicSet(DomainPackage.ADDRESS__LOCAL, DomainPackage.Literals.ADDRESS__LOCAL, newLocal);
 	}
 
 	/**
@@ -143,25 +130,9 @@ public class AddressImpl extends EntityImpl implements Address {
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
 			case DomainPackage.ADDRESS__LOCAL:
-				return LOCAL_EDEFAULT == null ? local != null : !LOCAL_EDEFAULT.equals(local);
+				return LOCAL_EDEFAULT == null ? getLocal() != null : !LOCAL_EDEFAULT.equals(getLocal());
 		}
 		return super.eIsSet(featureID);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public String toString() {
-		if (eIsProxy()) return super.toString();
-
-		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (local: ");
-		result.append(local);
-		result.append(')');
-		return result.toString();
 	}
 
 } //AddressImpl

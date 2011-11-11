@@ -18,8 +18,8 @@ public class QueryDummyRouter implements IQueryRouter {
 
 	@Override
 	public IQueryResponse execute(IQueryRequest qRequest) {
-		System.out.println("QUERY: ");
-		System.out.println(qRequest);
+		//System.out.println("QUERY: ");
+		//System.out.println(qRequest);
 		
 		HashSet<EntityID> results = new HashSet<EntityID>();
 		Tree<EntityID, String, Object> values = new Tree<EntityID, String, Object>();

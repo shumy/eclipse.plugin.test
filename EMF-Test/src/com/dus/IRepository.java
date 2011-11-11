@@ -9,6 +9,8 @@ import test.domain.Entity;
 
 public interface IRepository {
 	
+	<T extends Entity> T create(Class<T> type);
+	
 	<T extends Entity> T findById(Class<T> resultType, String id);
 	<T extends Entity> T findById(Class<T> resultType, String id, LoadConfigs loadConfigs);
 	

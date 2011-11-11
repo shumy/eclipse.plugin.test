@@ -8,11 +8,11 @@ import com.dus.query.IQuery;
 import com.dus.spi.EntityID;
 import com.dus.spi.query.IQueryRequest.QProtocol;
 
-public class Query<T extends Entity> extends AbstractQuery<T> implements IQuery<T> {
+public class QueryByFilter<T extends Entity> extends AbstractQuery<T> implements IQuery<T> {
 	
 	private int parameterNumber;
 	
-	public Query(Session session, Repository repository, EntityID resultType, String queryText) {
+	public QueryByFilter(Session session, Repository repository, EntityID resultType, String filter) {
 		super(session, repository, resultType, QProtocol.Q_FILTER);
 		
 		//TODO: compile queryText

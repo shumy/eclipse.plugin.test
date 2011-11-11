@@ -41,16 +41,6 @@ public class GroupImpl extends EntityImpl implements Group {
 	protected static final String NAME_EDEFAULT = null;
 
 	/**
-	 * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getName()
-	 * @generated
-	 * @ordered
-	 */
-	protected String name = NAME_EDEFAULT;
-
-	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -75,7 +65,7 @@ public class GroupImpl extends EntityImpl implements Group {
 	 * @generated
 	 */
 	public String getName() {
-		return name;
+		return (String)eDynamicGet(DomainPackage.GROUP__NAME, DomainPackage.Literals.GROUP__NAME, true, true);
 	}
 
 	/**
@@ -84,10 +74,7 @@ public class GroupImpl extends EntityImpl implements Group {
 	 * @generated
 	 */
 	public void setName(String newName) {
-		String oldName = name;
-		name = newName;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, DomainPackage.GROUP__NAME, oldName, name));
+		eDynamicSet(DomainPackage.GROUP__NAME, DomainPackage.Literals.GROUP__NAME, newName);
 	}
 
 	/**
@@ -143,25 +130,9 @@ public class GroupImpl extends EntityImpl implements Group {
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
 			case DomainPackage.GROUP__NAME:
-				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+				return NAME_EDEFAULT == null ? getName() != null : !NAME_EDEFAULT.equals(getName());
 		}
 		return super.eIsSet(featureID);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public String toString() {
-		if (eIsProxy()) return super.toString();
-
-		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (name: ");
-		result.append(name);
-		result.append(')');
-		return result.toString();
 	}
 
 } //GroupImpl

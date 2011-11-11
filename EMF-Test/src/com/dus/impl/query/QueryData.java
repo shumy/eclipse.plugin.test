@@ -56,7 +56,6 @@ public final class QueryData implements IQueryRequest {
 		
 		sb.append("\nRESULT-TYPE: ");
 		sb.append(resultType.type);
-		sb.append(resultType.type);
 		
 		sb.append("\nLOAD-CONFIGS: {");
 		if(loadConfigs != null)

@@ -1,7 +1,12 @@
 package com.dus.impl;
 
+import java.util.List;
+
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.impl.EStoreEObjectImpl.EStoreImpl;
 import org.eclipse.emf.ecore.util.BasicExtendedMetaData;
 import org.eclipse.emf.ecore.util.ExtendedMetaData;
 
@@ -9,8 +14,9 @@ import test.domain.Entity;
 
 import com.dus.IRepository;
 import com.dus.ISession;
-import com.dus.impl.query.Query;
+import com.dus.impl.query.QueryByFilter;
 import com.dus.impl.query.QueryByExample;
+import com.dus.impl.query.QueryById;
 import com.dus.query.IQuery;
 import com.dus.query.IQueryByExample;
 import com.dus.query.IQueryLoader;
@@ -41,31 +47,77 @@ public class Repository implements IRepository {
 		return eClass;
 	}
 	
-	public <T extends Entity> Entity createEmptyEntity(Class<T> entityType, String id) {
+	@SuppressWarnings("unchecked")
+	public <T extends Entity> T createEmptyEntity(Class<T> entityType) {
 		EClass eClass = getEClass(entityType);
-		Entity entity = (Entity) ePackage.getEFactoryInstance().create(eClass);
-		entity.setId(id);
-		
+		T entity = (T) ePackage.getEFactoryInstance().create(eClass);
 		return entity;
 	}
 	
+	@SuppressWarnings("unchecked")
+	public <T extends Entity> T create(EClass type) {
+		T entity = (T) ePackage.getEFactoryInstance().create(type);
+		
+		InternalEObject iEntity = (InternalEObject) entity;
+		iEntity.eSetStore(new EStoreImpl() {
+			
+			@Override
+			public void add(InternalEObject eObject, EStructuralFeature feature, int index, Object value) {
+				System.out.println("ADD: " + eObject.eClass().getName() + 
+						" F:" + feature.getName() + "=" + value +" at " + index);
+				
+				super.add(eObject, feature, index, value);
+			}
+			
+			@Override
+			public Object remove(InternalEObject eObject, EStructuralFeature feature, int index) {
+				System.out.println("REMOVE: " + eObject.eClass().getName() + 
+						" F:" + feature.getName() + " at " +index);
+				
+				return super.remove(eObject, feature, index);
+			}
+			
+			@Override
+			public Object set(InternalEObject eObject, EStructuralFeature feature, int index, Object value) {
+				System.out.println("SET: " + eObject.eClass().getName() + 
+						" F:" + feature.getName() + "=" + value +" at " + index);
+				
+				return super.set(eObject, feature, index, value);
+			}
+			
+			@Override
+			public Object get(InternalEObject eObject, EStructuralFeature feature, int index) {
+				System.out.println("GET: " + eObject.eClass().getName() + 
+						" F:" + feature.getName() + " at " +index);
+				
+				return super.get(eObject, feature, index);
+			}
+			
+		});
+		
+		//entity.setId("TMP"+EcoreUtil.generateUUID());
+		return entity;
+	}
 	
 	@Override
-	@SuppressWarnings("unchecked")
+	public <T extends Entity> T create(Class<T> type) {
+		EClass eClass = getEClass(type);
+		return create(eClass);
+	}
+	
+	@Override
 	public <T extends Entity> T findById(Class<T> resultType, String id) {
-		Entity entity = createEmptyEntity(resultType, id);
-		//TODO: load entity data from server 
-		session.activateAdapter(entity);
-		return (T) entity;
+		return findById(resultType, id, null);
 	}
 
 	@Override
-	@SuppressWarnings("unchecked")
 	public <T extends Entity> T findById(Class<T> resultType, String id, LoadConfigs loadConfigs) {
-		Entity entity = createEmptyEntity(resultType, id);
-		//TODO: load entity data from server 
-		session.activateAdapter(entity);
-		return (T) entity;
+		QueryById<T> qId = new QueryById<T>(session, this, new EntityID(resultType, id));
+		qId.setLoadConfigs(loadConfigs);
+		List<T> results = qId.execute();
+		
+		if(results.isEmpty()) return null;
+		return results.get(0);
 	}
 	
 	@Override
@@ -77,7 +129,7 @@ public class Repository implements IRepository {
 	@Override
 	public <T extends Entity> IQuery<T> qByFilter(Class<T> resultType, String filter) {
 		EClass type = getEClass(resultType);
-		return new Query<T>(session, this, new EntityID(type, null), filter);
+		return new QueryByFilter<T>(session, this, new EntityID(type, null), filter);
 	}
 	
 	@Override

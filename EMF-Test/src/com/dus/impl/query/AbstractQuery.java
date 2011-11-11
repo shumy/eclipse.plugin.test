@@ -33,7 +33,7 @@ public abstract class AbstractQuery<T extends Entity> implements IQueryLoader<T>
 	public AbstractQuery(Session session, Repository repository, EntityID resultType, QProtocol protocol) {
 		this.session = session;
 		this.repository = repository;
-		this.queryData = new QueryData(QProtocol.Q_FILTER, resultType);
+		this.queryData = new QueryData(protocol, resultType);
 	}
 	
 	@Override
@@ -66,7 +66,7 @@ public abstract class AbstractQuery<T extends Entity> implements IQueryLoader<T>
 		
 		EClass type = repository.getEClass(entityId.type);
 		
-		entity = (Entity) EcoreUtil.create(type);
+		entity = repository.create(type);
 		entity.setId(entityId.typeId);
 		
 		ITree<EntityID, String, Object> values = qResponse.getValues();

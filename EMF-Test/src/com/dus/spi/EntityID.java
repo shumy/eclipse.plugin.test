@@ -10,6 +10,10 @@ public final class EntityID {
 		this(type.getName(), typeId);
 	}
 	
+	public EntityID(Class<?> type, String typeId) {
+		this(type.getSimpleName(), typeId);
+	}
+	
 	public EntityID(String type, String typeId) {
 		this.type = type;
 		this.typeId = typeId;

@@ -54,17 +54,6 @@ public class UserImpl extends EntityImpl implements User {
 	 * @ordered
 	 */
 	protected static final String NAME_EDEFAULT = null;
-
-	/**
-	 * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getName()
-	 * @generated
-	 * @ordered
-	 */
-	protected String name = NAME_EDEFAULT;
-
 	/**
 	 * The default value of the '{@link #getPass() <em>Pass</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -74,36 +63,6 @@ public class UserImpl extends EntityImpl implements User {
 	 * @ordered
 	 */
 	protected static final String PASS_EDEFAULT = null;
-
-	/**
-	 * The cached value of the '{@link #getPass() <em>Pass</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getPass()
-	 * @generated
-	 * @ordered
-	 */
-	protected String pass = PASS_EDEFAULT;
-
-	/**
-	 * The cached value of the '{@link #getGroups() <em>Groups</em>}' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getGroups()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList<Group> groups;
-
-	/**
-	 * The cached value of the '{@link #getAddresses() <em>Addresses</em>}' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getAddresses()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList<Address> addresses;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -130,7 +89,7 @@ public class UserImpl extends EntityImpl implements User {
 	 * @generated
 	 */
 	public String getName() {
-		return name;
+		return (String)eDynamicGet(DomainPackage.USER__NAME, DomainPackage.Literals.USER__NAME, true, true);
 	}
 
 	/**
@@ -139,10 +98,7 @@ public class UserImpl extends EntityImpl implements User {
 	 * @generated
 	 */
 	public void setName(String newName) {
-		String oldName = name;
-		name = newName;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, DomainPackage.USER__NAME, oldName, name));
+		eDynamicSet(DomainPackage.USER__NAME, DomainPackage.Literals.USER__NAME, newName);
 	}
 
 	/**
@@ -151,7 +107,7 @@ public class UserImpl extends EntityImpl implements User {
 	 * @generated
 	 */
 	public String getPass() {
-		return pass;
+		return (String)eDynamicGet(DomainPackage.USER__PASS, DomainPackage.Literals.USER__PASS, true, true);
 	}
 
 	/**
@@ -160,10 +116,7 @@ public class UserImpl extends EntityImpl implements User {
 	 * @generated
 	 */
 	public void setPass(String newPass) {
-		String oldPass = pass;
-		pass = newPass;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, DomainPackage.USER__PASS, oldPass, pass));
+		eDynamicSet(DomainPackage.USER__PASS, DomainPackage.Literals.USER__PASS, newPass);
 	}
 
 	/**
@@ -171,11 +124,9 @@ public class UserImpl extends EntityImpl implements User {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@SuppressWarnings("unchecked")
 	public EList<Group> getGroups() {
-		if (groups == null) {
-			groups = new EObjectResolvingEList<Group>(Group.class, this, DomainPackage.USER__GROUPS);
-		}
-		return groups;
+		return (EList<Group>)eDynamicGet(DomainPackage.USER__GROUPS, DomainPackage.Literals.USER__GROUPS, true, true);
 	}
 
 	/**
@@ -183,11 +134,9 @@ public class UserImpl extends EntityImpl implements User {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@SuppressWarnings("unchecked")
 	public EList<Address> getAddresses() {
-		if (addresses == null) {
-			addresses = new EObjectContainmentEList<Address>(Address.class, this, DomainPackage.USER__ADDRESSES);
-		}
-		return addresses;
+		return (EList<Address>)eDynamicGet(DomainPackage.USER__ADDRESSES, DomainPackage.Literals.USER__ADDRESSES, true, true);
 	}
 
 	/**
@@ -284,33 +233,15 @@ public class UserImpl extends EntityImpl implements User {
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
 			case DomainPackage.USER__NAME:
-				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+				return NAME_EDEFAULT == null ? getName() != null : !NAME_EDEFAULT.equals(getName());
 			case DomainPackage.USER__PASS:
-				return PASS_EDEFAULT == null ? pass != null : !PASS_EDEFAULT.equals(pass);
+				return PASS_EDEFAULT == null ? getPass() != null : !PASS_EDEFAULT.equals(getPass());
 			case DomainPackage.USER__GROUPS:
-				return groups != null && !groups.isEmpty();
+				return !getGroups().isEmpty();
 			case DomainPackage.USER__ADDRESSES:
-				return addresses != null && !addresses.isEmpty();
+				return !getAddresses().isEmpty();
 		}
 		return super.eIsSet(featureID);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public String toString() {
-		if (eIsProxy()) return super.toString();
-
-		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (name: ");
-		result.append(name);
-		result.append(", pass: ");
-		result.append(pass);
-		result.append(')');
-		return result.toString();
 	}
 
 } //UserImpl
